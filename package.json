@@ -1,0 +1,81 @@
+{
+  "name": "stylelint-sass-render-errors",
+  "version": "0.0.0",
+  "description": "Display Sass render errors as lint errors.",
+  "license": "MIT",
+  "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "cjs/",
+    "esm/",
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "release": "np --no-release-draft",
+    "version": "if [ $(git rev-parse --abbrev-ref HEAD) == 'master' ]; then version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md; else echo; fi",
+    "postpublish": "GITHUB_TOKEN=$GITHUB_RELEASE_TOKEN github-release-from-changelog",
+    "lint": "eslint '{index,lib/**/*,test/**/*}.js'",
+    "test": "([ -z $WATCH_TEST ] && npm run lint || echo) && nyc mocha --require esm 'test/**/*.js' && nyc check-coverage",
+    "test:watch": "WATCH_TEST=1 nodemon --exec npm test",
+    "build": "rollup --config rollup.config.js",
+    "module-check": "node -e 'require(\"stylelint-sass-render-errors\");' && node --input-type=module -e 'import \"stylelint-sass-render-errors\";'",
+    "prepublishOnly": "npm run build && npm run module-check"
+  },
+  "devDependencies": {
+    "changelog-verify": "^1.1.2",
+    "eslint": "^7.31.0",
+    "eslint-config-niksy": "^10.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^33.3.0",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-unicorn": "^31.0.0",
+    "esm": "^3.0.51",
+    "github-release-from-changelog": "^2.1.1",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.2",
+    "mocha": "^8.2.0",
+    "nodemon": "^2.0.6",
+    "np": "^6.5.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "rollup": "^2.32.1",
+    "version-changelog": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "keywords": [
+    "stylelint",
+    "sass",
+    "render",
+    "error",
+    "deprecation",
+    "warning"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niksy/stylelint-sass-render-errors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niksy/stylelint-sass-render-errors/issues"
+  },
+  "homepage": "https://github.com/niksy/stylelint-sass-render-errors#readme"
+}
