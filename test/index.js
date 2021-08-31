@@ -1,4 +1,3 @@
-import path from 'path';
 import function_ from '../index';
 import { runCodeTest, runFileTest } from './util';
 

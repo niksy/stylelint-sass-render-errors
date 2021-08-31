@@ -12,6 +12,7 @@ import createRenderer from 'sass-render-errors';
 import sass from 'sass';
 import pkgUp from 'pkg-up';
 import resolveFrom from 'resolve-from';
+import pMemoize from 'p-memoize';
 
 const ruleName = 'plugin/sass-render-errors';
 
@@ -41,6 +42,17 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 
 const renderer = createRenderer(sass);
 
+const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
+	let config;
+	const { default: importedConfig } = await import(configLocation);
+	if (typeof importedConfig === 'function') {
+		config = await importedConfig();
+	} else {
+		config = importedConfig;
+	}
+	return config;
+});
+
 /**
  * @param   {{ file: string, css: string }} input
  * @param   {string|object}                 configValue
@@ -56,12 +68,8 @@ async function getSassOptions(input, configValue) {
 		const packagePath = await pkgUp();
 		const startingLocation = path.dirname(packagePath ?? process.cwd());
 		const configLocation = resolveFrom(startingLocation, configValue);
-		const { default: importedConfig } = await import(configLocation);
-		if (typeof importedConfig === 'function') {
-			config = await importedConfig();
-		} else {
-			config = importedConfig;
-		}
+		const importedConfig = await importConfig(configLocation);
+		config = importedConfig;
 	} else {
 		config = configValue;
 	}
