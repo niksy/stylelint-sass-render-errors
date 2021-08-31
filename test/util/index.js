@@ -4,16 +4,38 @@ import path from 'path';
 import assert from 'assert';
 import { lint } from 'stylelint';
 
-export const runCodeTest = (options = {}) => {
-	const { ruleName, config, accept, reject } = options;
+/**
+ * @typedef {import('stylelint').SyntaxType} SyntaxType
+ */
 
-	accept.forEach(({ code, syntax = 'css' }) => {
-		it(`should pass for: \`${code}\``, async function () {
+/**
+ * @typedef {object} Test
+ * @property {string}     input
+ * @property {SyntaxType} [syntax]
+ * @property {object[]}   result
+ */
+
+/**
+ * @typedef {object} TestOptions
+ * @property {string} ruleName
+ * @property {object} config
+ * @property {Test[]} accept
+ * @property {Test[]} reject
+ */
+
+/**
+ * @param {TestOptions} options
+ */
+export const runCodeTest = (options) => {
+	const { ruleName, config, accept, reject } = options ?? {};
+
+	accept.forEach((/** @type {Test} */ { input, syntax }) => {
+		it(`should pass for: \`${input}\``, async function () {
 			const {
-				results: [{ warnings, parseErrors }]
+				results: [{ warnings }]
 			} = await lint({
-				code,
-				syntax,
+				code: input,
+				syntax: syntax,
 				config: {
 					plugins: [path.resolve(__dirname, '../../index.js')],
 					rules: {
@@ -26,21 +48,16 @@ export const runCodeTest = (options = {}) => {
 				0,
 				`Accept case contains warnings, expected 0, got ${warnings.length}`
 			);
-			assert.equal(
-				parseErrors.length,
-				0,
-				`Accept case contains parse errors, expected 0, got ${parseErrors.length}`
-			);
 		});
 	});
 
-	reject.forEach(({ code, syntax = 'css', result }) => {
-		it(`should reject for: \`${code}\``, async function () {
+	reject.forEach((/** @type {Test} */ { input, syntax, result }) => {
+		it(`should reject for: \`${input}\``, async function () {
 			const {
-				results: [{ warnings, parseErrors }]
+				results: [{ warnings }]
 			} = await lint({
-				code,
-				syntax,
+				code: input,
+				syntax: syntax,
 				config: {
 					plugins: [path.resolve(__dirname, '../../index.js')],
 					rules: {
@@ -49,21 +66,24 @@ export const runCodeTest = (options = {}) => {
 				}
 			});
 			const [{ rule, severity, ...warning }] = warnings;
-			assert.deepEqual(warning, result, 'Expected different warning');
+			assert.deepEqual(warning, result[0], 'Expected different warning');
 		});
 	});
 };
 
-export const runFileTest = (options = {}) => {
-	const { ruleName, config, accept, reject } = options;
+/**
+ * @param {TestOptions} options
+ */
+export const runFileTest = (options) => {
+	const { ruleName, config, accept, reject } = options ?? {};
 
-	accept.forEach(({ files, syntax = 'css' }) => {
-		it(`should pass for: \`${files}\``, async function () {
+	accept.forEach((/** @type {Test} */ { input, syntax }) => {
+		it(`should pass for: \`${input}\``, async function () {
 			const {
-				results: [{ warnings, parseErrors }]
+				results: [{ warnings }]
 			} = await lint({
-				files: path.resolve(__dirname, '../', files),
-				syntax,
+				files: path.resolve(__dirname, '../', input),
+				syntax: syntax,
 				config: {
 					plugins: [path.resolve(__dirname, '../../index.js')],
 					rules: {
@@ -76,21 +96,16 @@ export const runFileTest = (options = {}) => {
 				0,
 				`Accept case contains warnings, expected 0, got ${warnings.length}`
 			);
-			assert.equal(
-				parseErrors.length,
-				0,
-				`Accept case contains parse errors, expected 0, got ${parseErrors.length}`
-			);
 		});
 	});
 
-	reject.forEach(({ files, syntax = 'css', results }) => {
-		it(`should reject for: \`${files}\``, async function () {
+	reject.forEach((/** @type {Test} */ { input, syntax, result }) => {
+		it(`should reject for: \`${input}\``, async function () {
 			const {
-				results: [{ warnings, parseErrors }]
+				results: [{ warnings }]
 			} = await lint({
-				files: path.resolve(__dirname, '../', files),
-				syntax,
+				files: path.resolve(__dirname, '../', input),
+				syntax: syntax,
 				config: {
 					plugins: [path.resolve(__dirname, '../../index.js')],
 					rules: {
@@ -100,18 +115,13 @@ export const runFileTest = (options = {}) => {
 			});
 			assert.equal(
 				warnings.length,
-				results.length,
+				result.length,
 				`Not all warnings have been covered for reject case`
-			);
-			assert.equal(
-				parseErrors.length,
-				0,
-				`Reject case contains parse errors, expected 0, got ${parseErrors.length}`
 			);
 			warnings.forEach(({ rule, severity, ...warning }, index) => {
 				assert.deepEqual(
 					warning,
-					results[index],
+					result[index],
 					`Warning is not covered: "${warning.text}"`
 				);
 			});

@@ -1,9 +1,14 @@
 /* eslint-disable import/dynamic-import-chunkname */
 
+/**
+ * @typedef {import('sass-render-errors').SassOptions} SassOptions
+ */
+
 import path from 'path';
 import Ajv from 'ajv';
 import stylelint from 'stylelint';
 import createRenderer from 'sass-render-errors';
+// @ts-ignore
 import sass from 'sass';
 import pkgUp from 'pkg-up';
 import resolveFrom from 'resolve-from';
@@ -36,14 +41,20 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 
 const renderer = createRenderer(sass);
 
+/**
+ * @param   {{ file: string, css: string }} input
+ * @param   {string|object}                 configValue
+ *
+ * @returns {Promise<SassOptions>}
+ */
 async function getSassOptions(input, configValue) {
-	const file = input.file;
-	const source = input.css;
+	const { file, css } = input;
+	/** @type {SassOptions} */
 	let config;
 
 	if (typeof configValue === 'string') {
 		const packagePath = await pkgUp();
-		const startingLocation = path.dirname(packagePath);
+		const startingLocation = path.dirname(packagePath ?? process.cwd());
 		const configLocation = resolveFrom(startingLocation, configValue);
 		const { default: importedConfig } = await import(configLocation);
 		if (typeof importedConfig === 'function') {
@@ -55,7 +66,7 @@ async function getSassOptions(input, configValue) {
 		config = configValue;
 	}
 
-	if (typeof file !== 'undefined') {
+	if (file !== '') {
 		return {
 			...config,
 			file: file,
@@ -64,7 +75,7 @@ async function getSassOptions(input, configValue) {
 	}
 	return {
 		...config,
-		data: source,
+		data: css,
 		quietDeps: true
 	};
 }
@@ -83,22 +94,28 @@ const plugin = stylelint.createPlugin(
 
 		const { renderMode = 'async', sassOptions: initialSassOptions = {} } =
 			resolveRules;
+
 		let sassOptions;
 
 		try {
 			sassOptions = await getSassOptions(
-				cssRoot.source.input,
+				{
+					file: cssRoot.source?.input.file ?? '',
+					css: result.css ?? ''
+				},
 				initialSassOptions
 			);
-		} catch (error) {
+		} catch (/** @type {any} */ error_) {
+			/** @type {Error} */
+			const error = error_;
 			stylelint.utils.report({
 				ruleName: ruleName,
 				result: result,
 				node: cssRoot,
 				line: 1,
-				column: 1,
 				message: messages.report(error.message)
 			});
+			return;
 		}
 
 		const resolvedRenderer =
@@ -112,7 +129,6 @@ const plugin = stylelint.createPlugin(
 				node: cssRoot,
 				word: error.source.pattern,
 				line: error.source.start.line,
-				column: error.source.start.column,
 				message: messages.report(error.message)
 			});
 		});

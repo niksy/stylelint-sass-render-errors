@@ -75,11 +75,23 @@ Rendering mode for Sass render. Can be either `async` for `sass.render` or
 
 ### sassOptions
 
-Type: `object`
+Type: `object|string`
 
-[Sass options](https://github.com/sass/dart-sass#javascript-api). For detailed
-explanation see
+If object, it is
+[Sass options](https://github.com/sass/dart-sass#javascript-api) object. For
+detailed explanation see
 [node-sass options reference](https://github.com/sass/node-sass#options).
+
+If string, it is config file location which returns one of the following default
+exports:
+
+-   Sass options object
+-   Async or regular function returning Sass options object
+
+Config file location is [resolved](https://github.com/sindresorhus/resolve-from)
+relatively from the
+[closest `package.json` location](https://github.com/sindresorhus/pkg-up) inside
+current working directory.
 
 ## License
 

@@ -14,13 +14,14 @@ describe('Config as object', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/accept.scss'
+					input: './fixtures/accept.scss',
+					result: []
 				}
 			],
 			reject: [
 				{
-					files: './fixtures/reject.errors.scss',
-					results: [
+					input: './fixtures/reject.errors.scss',
+					result: [
 						{
 							line: 1,
 							column: 9,
@@ -31,8 +32,8 @@ describe('Config as object', function () {
 					]
 				},
 				{
-					files: './fixtures/reject.deprecations.scss',
-					results: [
+					input: './fixtures/reject.deprecations.scss',
+					result: [
 						{
 							line: 5,
 							column: 9,
@@ -62,7 +63,8 @@ describe('Config as object', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/reject.errors.scss'
+					input: './fixtures/reject.errors.scss',
+					result: []
 				}
 			],
 			reject: []
@@ -76,29 +78,34 @@ describe('Config as object', function () {
 			},
 			accept: [
 				{
-					code: '@use "sass:math";'
+					input: '@use "sass:math";',
+					result: []
 				}
 			],
 			reject: [
 				{
-					code: '@use "loki";',
-					result: {
-						line: 1,
-						column: 1,
-						text: messages.report(
-							"Can't find stylesheet to import."
-						)
-					}
+					input: '@use "loki";',
+					result: [
+						{
+							line: 1,
+							column: 1,
+							text: messages.report(
+								"Can't find stylesheet to import."
+							)
+						}
+					]
 				},
 				{
-					code: '@use "sass:color"; .becky { color: color.invert(1); }',
-					result: {
-						line: 1,
-						column: 36,
-						text: messages.report(
-							'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
-						)
-					}
+					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					result: [
+						{
+							line: 1,
+							column: 36,
+							text: messages.report(
+								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
+							)
+						}
+					]
 				}
 			]
 		});
@@ -113,7 +120,8 @@ describe('Config as object', function () {
 			},
 			accept: [
 				{
-					code: '@use "loki";'
+					input: '@use "loki";',
+					result: []
 				}
 			],
 			reject: []
@@ -131,13 +139,14 @@ describe('Config as file returning (async) function', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/accept.scss'
+					input: './fixtures/accept.scss',
+					result: []
 				}
 			],
 			reject: [
 				{
-					files: './fixtures/reject.errors.scss',
-					results: [
+					input: './fixtures/reject.errors.scss',
+					result: [
 						{
 							line: 1,
 							column: 9,
@@ -148,8 +157,8 @@ describe('Config as file returning (async) function', function () {
 					]
 				},
 				{
-					files: './fixtures/reject.deprecations.scss',
-					results: [
+					input: './fixtures/reject.deprecations.scss',
+					result: [
 						{
 							line: 5,
 							column: 9,
@@ -177,7 +186,8 @@ describe('Config as file returning (async) function', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/reject.errors.scss'
+					input: './fixtures/reject.errors.scss',
+					result: []
 				}
 			],
 			reject: []
@@ -191,29 +201,34 @@ describe('Config as file returning (async) function', function () {
 			},
 			accept: [
 				{
-					code: '@use "sass:math";'
+					input: '@use "sass:math";',
+					result: []
 				}
 			],
 			reject: [
 				{
-					code: '@use "loki";',
-					result: {
-						line: 1,
-						column: 1,
-						text: messages.report(
-							"Can't find stylesheet to import."
-						)
-					}
+					input: '@use "loki";',
+					result: [
+						{
+							line: 1,
+							column: 1,
+							text: messages.report(
+								"Can't find stylesheet to import."
+							)
+						}
+					]
 				},
 				{
-					code: '@use "sass:color"; .becky { color: color.invert(1); }',
-					result: {
-						line: 1,
-						column: 36,
-						text: messages.report(
-							'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
-						)
-					}
+					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					result: [
+						{
+							line: 1,
+							column: 36,
+							text: messages.report(
+								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
+							)
+						}
+					]
 				}
 			]
 		});
@@ -226,7 +241,8 @@ describe('Config as file returning (async) function', function () {
 			},
 			accept: [
 				{
-					code: '@use "loki";'
+					input: '@use "loki";',
+					result: []
 				}
 			],
 			reject: []
@@ -244,13 +260,14 @@ describe('Config as file returning object', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/accept.scss'
+					input: './fixtures/accept.scss',
+					result: []
 				}
 			],
 			reject: [
 				{
-					files: './fixtures/reject.errors.scss',
-					results: [
+					input: './fixtures/reject.errors.scss',
+					result: [
 						{
 							line: 1,
 							column: 9,
@@ -261,8 +278,8 @@ describe('Config as file returning object', function () {
 					]
 				},
 				{
-					files: './fixtures/reject.deprecations.scss',
-					results: [
+					input: './fixtures/reject.deprecations.scss',
+					result: [
 						{
 							line: 5,
 							column: 9,
@@ -290,7 +307,8 @@ describe('Config as file returning object', function () {
 			},
 			accept: [
 				{
-					files: './fixtures/reject.errors.scss'
+					input: './fixtures/reject.errors.scss',
+					result: []
 				}
 			],
 			reject: []
@@ -304,29 +322,34 @@ describe('Config as file returning object', function () {
 			},
 			accept: [
 				{
-					code: '@use "sass:math";'
+					input: '@use "sass:math";',
+					result: []
 				}
 			],
 			reject: [
 				{
-					code: '@use "loki";',
-					result: {
-						line: 1,
-						column: 1,
-						text: messages.report(
-							"Can't find stylesheet to import."
-						)
-					}
+					input: '@use "loki";',
+					result: [
+						{
+							line: 1,
+							column: 1,
+							text: messages.report(
+								"Can't find stylesheet to import."
+							)
+						}
+					]
 				},
 				{
-					code: '@use "sass:color"; .becky { color: color.invert(1); }',
-					result: {
-						line: 1,
-						column: 36,
-						text: messages.report(
-							'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
-						)
-					}
+					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					result: [
+						{
+							line: 1,
+							column: 36,
+							text: messages.report(
+								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
+							)
+						}
+					]
 				}
 			]
 		});
@@ -339,7 +362,8 @@ describe('Config as file returning object', function () {
 			},
 			accept: [
 				{
-					code: '@use "loki";'
+					input: '@use "loki";',
+					result: []
 				}
 			],
 			reject: []
