@@ -1,7 +1,7 @@
 {
   "name": "stylelint-sass-render-errors",
   "version": "0.0.0",
-  "description": "Display Sass render errors as lint errors.",
+  "description": "Display Sass render errors and deprecations as lint errors.",
   "license": "MIT",
   "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
   "sideEffects": false,
@@ -35,6 +35,12 @@
     "module-check": "node -e 'require(\"stylelint-sass-render-errors\");' && node --input-type=module -e 'import \"stylelint-sass-render-errors\";'",
     "prepublishOnly": "npm run build && npm run module-check"
   },
+  "dependencies": {
+    "ajv": "^8.6.2",
+    "pkg-up": "^3.1.0",
+    "resolve-from": "^5.0.0",
+    "sass-render-errors": "file:../sass-render-errors"
+  },
   "devDependencies": {
     "changelog-verify": "^1.1.2",
     "eslint": "^7.31.0",
@@ -57,6 +63,8 @@
     "nyc": "^15.1.0",
     "prettier": "^2.1.2",
     "rollup": "^2.32.1",
+    "sass": "^1.38.2",
+    "stylelint": "^13.13.1",
     "version-changelog": "^3.1.1"
   },
   "engines": {
@@ -68,7 +76,8 @@
     "render",
     "error",
     "deprecation",
-    "warning"
+    "warning",
+    "stylelint-plugin"
   ],
   "repository": {
     "type": "git",

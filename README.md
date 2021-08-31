@@ -2,90 +2,84 @@
 
 [![Build Status][ci-img]][ci]
 
-Display Sass render errors as lint errors.
+Display Sass render errors and deprecations as lint errors.
+
+Sass deprecations are treated same as errors since
+[Sass tries to move language forward](https://github.com/sass/libsass/issues/2822#issuecomment-482914373)
+and each deprecation should be solved as soon as possible in your codebase.
 
 ## Install
 
 ```sh
-npm install stylelint-sass-render-errors --save
+npm install stylelint-sass-render-errors --save-dev
 ```
+
+[Sass][dart-sass] should be installed as peer dependancy because each version
+has different set of errors and deprecations and you should get results for Sass
+version your application uses. _Only Dart Sass is supported._
 
 ## Usage
 
-```js
-// Module usage
+Add this config to your `.stylelintrc`:
+
+```json
+{
+	"plugins": ["stylelint-sass-render-errors"],
+	"rules": {
+		"plugin/sass-render-errors": true
+	}
+}
 ```
 
-More usage examples.
+<!-- prettier-ignore-start -->
 
-## API
+```scss
+@use 'sass:color';
+@use 'sass:math';
 
-### methodName(arg, [optionalArg])
+.becky {
+    color: color.invert(1);
+/**        ↑
+ * Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1). */
+}
 
-Returns: `Mixed`
+#marley {
+    width: math.percentage(100 / 2);
+/**                        ↑
+ * Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div. */
+}
+```
 
-Method description.
+<!-- prettier-ignore-end -->
 
-#### arg
+## Options
 
-Type: `Mixed`
+Plugin accepts either boolean (`true`) or object configuration.
 
-arg description.
+If boolean, it will use default configuration:
 
-#### optionalArg
+-   `sass.render` for rendering Sass files and resolving errors and deprecations
+-   No options for Sass renderer other than `file` if file is linted or `data`
+    if CSS string is linted
 
-Type: `Object`
+If object configuration, following properties are valid:
 
-optionalArg description.
+### renderMode
 
-##### prop1
+Type: `string`  
+Default: `async`
 
-Type: `String`  
-Default: `'3'`
+Rendering mode for Sass render. Can be either `async` for `sass.render` or
+`sync` for `sass.renderSync`. This way you can
+[leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
 
-`prop1` description.
+### sassOptions
 
-##### prop2
+Type: `object`
 
-Type: `Number`  
-Default: `3`
-
-##### prop3
-
-Type: `Number[]`  
-Default: `[1, 2, 3]`
-
-##### prop4
-
-Type: `Number[]` `String[]`  
-Default: `['1', '2', '3']`
-
-`prop4` description.
-
-##### prop5
-
-Type: `Function`  
-Default: `noop`
-
-`prop5` description.
-
-Function arguments:
-
--   **arg1** `String` arg1 description
--   **arg2** `Number` arg2 description
--   **arg3** `Element` `Boolean` arg3 description
-
-> Alternative approach
-
-| Property | Type                  | Default           | Description                                              |
-| -------- | --------------------- | ----------------- | -------------------------------------------------------- |
-| `prop1`  | `String`              | `'3'`             | `prop1` description.                                     |
-| `prop2`  | `Number`              | `3`               | `prop2` description.                                     |
-| `prop3`  | `Number[]`            | `[1, 2, 3]`       | `prop3` description.                                     |
-| `prop4`  | `Number[]` `String[]` | `['1', '2', '3']` | `prop4` description.                                     |
-| `prop5`  | `Function`            | `noop`            | `prop5` description. (No function arguments description) |
-
----
+[Sass options](https://github.com/sass/dart-sass#javascript-api). For detailed
+explanation see
+[node-sass options reference](https://github.com/sass/node-sass#options).
 
 ## License
 
@@ -95,5 +89,6 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 [ci]: https://travis-ci.com/niksy/stylelint-sass-render-errors
 [ci-img]: https://travis-ci.com/niksy/stylelint-sass-render-errors.svg?branch=master
+[dart-sass]: https://github.com/sass/dart-sass
 
 <!-- prettier-ignore-end -->
