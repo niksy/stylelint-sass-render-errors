@@ -4,19 +4,26 @@
 
 Display Sass render errors and deprecations as lint errors.
 
-Sass deprecations are treated same as errors since
-[Sass tries to move language forward](https://github.com/sass/libsass/issues/2822#issuecomment-482914373)
-and each deprecation should be solved as soon as possible in your codebase.
+Implementation details:
+
+-   Sass deprecations are treated same as errors since
+    [Sass tries to move language forward](https://github.com/sass/libsass/issues/2822#issuecomment-482914373)
+    and each deprecation should be corrected as soon as possible in your
+    codebase
+-   Plugin operates on each file in isolation so if you have global `@import`
+    statements, they won’t be applied and you could get errors for e.g.
+    undefined variables. Recommendation is to switch to
+    [Sass modules](https://sass-lang.com/documentation/modules) and
+    [`@use`/`@forward` statements](https://sass-lang.com/documentation/at-rules/use)
+-   Sass (_only Dart Sass is supported_) should be installed as peer dependancy
+    because each version has different set of errors and deprecations and you
+    should get results for Sass version your application uses
 
 ## Install
 
 ```sh
 npm install stylelint-sass-render-errors --save-dev
 ```
-
-[Sass][dart-sass] should be installed as peer dependancy because each version
-has different set of errors and deprecations and you should get results for Sass
-version your application uses. _Only Dart Sass is supported._
 
 ## Usage
 
@@ -101,6 +108,5 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 [ci]: https://travis-ci.com/niksy/stylelint-sass-render-errors
 [ci-img]: https://travis-ci.com/niksy/stylelint-sass-render-errors.svg?branch=master
-[dart-sass]: https://github.com/sass/dart-sass
 
 <!-- prettier-ignore-end -->
