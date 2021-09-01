@@ -53,6 +53,16 @@ const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
 	return config;
 });
 
+const getConfigLocation = pMemoize(
+	async (/** @type {string} */ cwd, /** @type {string} */ configValue) => {
+		const packagePath = await pkgUp({ cwd });
+		const startingLocation = path.dirname(packagePath ?? cwd);
+		const configLocation = resolveFrom(startingLocation, configValue);
+		return configLocation;
+	},
+	{ cacheKey: JSON.stringify }
+);
+
 /**
  * @param   {{ file: string, css: string }} input
  * @param   {string|object}                 configValue
@@ -65,9 +75,10 @@ async function getSassOptions(input, configValue) {
 	let config;
 
 	if (typeof configValue === 'string') {
-		const packagePath = await pkgUp();
-		const startingLocation = path.dirname(packagePath ?? process.cwd());
-		const configLocation = resolveFrom(startingLocation, configValue);
+		const configLocation = await getConfigLocation(
+			process.cwd(),
+			configValue
+		);
 		const importedConfig = await importConfig(configLocation);
 		config = importedConfig;
 	} else {
