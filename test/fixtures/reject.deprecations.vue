@@ -1,0 +1,14 @@
+<template></template>
+<script></script>
+<style lang="scss">
+@use 'sass:color';
+@use 'sass:math';
+
+.becky {
+	color: color.invert(1);
+}
+
+#marley {
+	width: math.percentage(100 / 2);
+}
+</style>

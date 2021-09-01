@@ -16,6 +16,8 @@ import pMemoize from 'p-memoize';
 
 const ruleName = 'plugin/sass-render-errors';
 
+const validStyleFileExtensions = ['.scss', '.sass', '.css'];
+
 const ajv = new Ajv();
 const validateOptions = ajv.compile({
 	oneOf: [
@@ -64,6 +66,14 @@ const getConfigLocation = pMemoize(
 );
 
 /**
+ * @param {string} file
+ */
+function isValidStyleFile(file) {
+	const extension = path.extname(file);
+	return file !== '' && validStyleFileExtensions.includes(extension);
+}
+
+/**
  * @param   {{ file: string, css: string }} input
  * @param   {string|object}                 configValue
  *
@@ -85,7 +95,7 @@ async function getSassOptions(input, configValue) {
 		config = configValue;
 	}
 
-	if (file !== '') {
+	if (isValidStyleFile(file)) {
 		return {
 			...config,
 			file: file,
@@ -120,7 +130,11 @@ const plugin = stylelint.createPlugin(
 			sassOptions = await getSassOptions(
 				{
 					file: cssRoot.source?.input.file ?? '',
-					css: result.css ?? ''
+					/*
+					 * PostCSS types don’t have "css" property even though it’s documented
+					 */
+					// @ts-ignore
+					css: cssRoot.source?.input.css ?? ''
 				},
 				initialSassOptions
 			);

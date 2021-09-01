@@ -156,6 +156,18 @@ describe('Config as file returning (async) function', function () {
 					]
 				},
 				{
+					input: './fixtures/reject.errors.vue',
+					result: [
+						{
+							line: 4,
+							column: 9,
+							text: messages.report(
+								"Can't find stylesheet to import."
+							)
+						}
+					]
+				},
+				{
 					input: './fixtures/reject.deprecations.scss',
 					result: [
 						{
@@ -167,6 +179,25 @@ describe('Config as file returning (async) function', function () {
 						},
 						{
 							line: 9,
+							column: 25,
+							text: messages.report(
+								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
+							)
+						}
+					]
+				},
+				{
+					input: './fixtures/reject.deprecations.vue',
+					result: [
+						{
+							line: 8,
+							column: 9,
+							text: messages.report(
+								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
+							)
+						},
+						{
+							line: 12,
 							column: 25,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
@@ -277,6 +308,18 @@ describe('Config as file returning object', function () {
 					]
 				},
 				{
+					input: './fixtures/reject.errors.vue',
+					result: [
+						{
+							line: 4,
+							column: 9,
+							text: messages.report(
+								"Can't find stylesheet to import."
+							)
+						}
+					]
+				},
+				{
 					input: './fixtures/reject.deprecations.scss',
 					result: [
 						{
@@ -288,6 +331,25 @@ describe('Config as file returning object', function () {
 						},
 						{
 							line: 9,
+							column: 25,
+							text: messages.report(
+								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
+							)
+						}
+					]
+				},
+				{
+					input: './fixtures/reject.deprecations.vue',
+					result: [
+						{
+							line: 8,
+							column: 9,
+							text: messages.report(
+								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
+							)
+						},
+						{
+							line: 12,
 							column: 25,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
