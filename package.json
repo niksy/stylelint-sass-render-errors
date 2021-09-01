@@ -1,6 +1,6 @@
 {
   "name": "stylelint-sass-render-errors",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Display Sass render errors and deprecations as lint errors.",
   "license": "MIT",
   "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
