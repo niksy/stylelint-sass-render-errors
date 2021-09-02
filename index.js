@@ -1,13 +1,17 @@
 /* eslint-disable import/dynamic-import-chunkname */
 
 /**
- * @typedef {import('sass-render-errors').SassOptions} SassOptions
+ * @typedef {import('sass-render-errors/esm/types').Options} SassOptions
+ * @typedef {import('sass-render-errors/esm/types').SassRenderError} SassRenderError
  */
 
 import path from 'path';
 import Ajv from 'ajv';
 import stylelint from 'stylelint';
-import createRenderer from 'sass-render-errors';
+import renderErrorsFactory, {
+	undefinedFunctions,
+	undefinedFunctions as undefinedFunctionsFactory
+} from 'sass-render-errors';
 // @ts-ignore
 import sass from 'sass';
 import pkgUp from 'pkg-up';
@@ -26,6 +30,9 @@ const validateOptions = ajv.compile({
 			type: 'object',
 			additionalProperties: false,
 			properties: {
+				checkUndefinedFunctions: {
+					type: 'boolean'
+				},
 				renderMode: {
 					type: 'string',
 					enum: ['async', 'sync']
@@ -42,7 +49,8 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 	report: (value) => value
 });
 
-const renderer = createRenderer(sass);
+const renderErrorsRenderer = renderErrorsFactory(sass);
+const undefinedFunctionRenderer = undefinedFunctionsFactory(sass);
 
 const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
 	let config;
@@ -121,9 +129,13 @@ const plugin = stylelint.createPlugin(
 			return;
 		}
 
-		const { renderMode = 'async', sassOptions: initialSassOptions = {} } =
-			resolveRules;
+		const {
+			renderMode = 'async',
+			sassOptions: initialSassOptions = {},
+			checkUndefinedFunctions = false
+		} = resolveRules;
 
+		/** @type {SassOptions} */
 		let sassOptions;
 
 		try {
@@ -151,11 +163,26 @@ const plugin = stylelint.createPlugin(
 			return;
 		}
 
-		const resolvedRenderer =
-			renderMode === 'async' ? renderer.render : renderer.renderSync;
-		const renderResult = await resolvedRenderer(sassOptions);
+		const renderers = [];
+		renderers.push(renderErrorsRenderer);
+		if (checkUndefinedFunctions) {
+			renderers.push(undefinedFunctionRenderer);
+		}
 
-		renderResult.forEach((error) => {
+		const results = await Promise.all(
+			renderers.map((renderer) => {
+				if (renderMode === 'async') {
+					return renderer.render(sassOptions);
+				}
+				return renderer.renderSync(sassOptions);
+			})
+		);
+
+		/** @type {SassRenderError[]} */
+		let errors = [];
+		errors = errors.concat(...results);
+
+		errors.forEach((error) => {
 			stylelint.utils.report({
 				ruleName: ruleName,
 				result: result,

@@ -431,3 +431,62 @@ describe('Config as file returning object', function () {
 		});
 	});
 });
+
+describe('Check undefined functions', function () {
+	[
+		{ renderMode: 'async', checkUndefinedFunctions: true },
+		{ renderMode: 'sync', checkUndefinedFunctions: true }
+	].forEach((options) => {
+		runFileTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: './fixtures/accept.scss',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: './fixtures/reject.undefined-functions.scss',
+					result: [
+						{
+							line: 1,
+							column: 2,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+
+		runCodeTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: 'body { width: calc(100 + 1px); }',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: 'body { width: becky(#f00); }',
+					result: [
+						{
+							line: 1,
+							column: 15,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+	});
+});

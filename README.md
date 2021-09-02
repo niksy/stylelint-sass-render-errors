@@ -66,6 +66,7 @@ Plugin accepts either boolean (`true`) or object configuration.
 If boolean, it will use default configuration:
 
 -   `sass.render` for rendering Sass files and resolving errors and deprecations
+-   Undefined functions are not checked
 -   No options for Sass renderer other than `file` if file is linted or `data`
     if CSS string is linted
 
@@ -79,6 +80,13 @@ Default: `async`
 Rendering mode for Sass render. Can be either `async` for `sass.render` or
 `sync` for `sass.renderSync`. This way you can
 [leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
+
+### checkUndefinedFunctions
+
+Type: `boolean`  
+Default: `false`
+
+[Check undefined functions](https://github.com/niksy/sass-render-errors#undefined-functions).
 
 ### sassOptions
 
