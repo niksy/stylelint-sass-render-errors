@@ -1,6 +1,8 @@
 /* eslint-disable import/dynamic-import-chunkname */
 
 /**
+ * @typedef {import('postcss').Root} Root
+ * @typedef {import('postcss').ChildNode} ChildNode
  * @typedef {import('sass-render-errors/esm/types').Options} SassOptions
  * @typedef {import('sass-render-errors/esm/types').SassRenderError} SassRenderError
  */
@@ -117,6 +119,33 @@ async function getSassOptions(input, configValue) {
 	};
 }
 
+/**
+ * @param {Root}   cssRoot
+ * @param {number} line
+ * @param {number} column
+ */
+function getClosestNode(cssRoot, line, column) {
+	/** @type {ChildNode[]} */
+	const nodes = [];
+
+	cssRoot.walk((node) => {
+		if (node?.source?.start?.line === line) {
+			nodes.push(node);
+		}
+	});
+
+	const closestNode = { diff: Infinity, index: -1 };
+
+	nodes.forEach((node, index) => {
+		const diff = Math.abs((node?.source?.start?.column ?? 0) - column);
+		if (diff < closestNode.diff) {
+			closestNode.diff = diff;
+			closestNode.index = index;
+		}
+	});
+	return nodes[closestNode.index] ?? cssRoot;
+}
+
 const plugin = stylelint.createPlugin(
 	ruleName,
 	(resolveRules) => async (cssRoot, result) => {
@@ -137,16 +166,18 @@ const plugin = stylelint.createPlugin(
 
 		/** @type {SassOptions} */
 		let sassOptions;
+		const file = cssRoot.source?.input.file ?? '';
+		/*
+		 * PostCSS types don’t have "css" property even though it’s documented
+		 */
+		// @ts-ignore
+		const css = cssRoot.source?.input.css ?? '';
 
 		try {
 			sassOptions = await getSassOptions(
 				{
-					file: cssRoot.source?.input.file ?? '',
-					/*
-					 * PostCSS types don’t have "css" property even though it’s documented
-					 */
-					// @ts-ignore
-					css: cssRoot.source?.input.css ?? ''
+					file: file,
+					css: css
 				},
 				initialSassOptions
 			);
@@ -182,13 +213,28 @@ const plugin = stylelint.createPlugin(
 		let errors = [];
 		errors = errors.concat(...results);
 
+		const shouldApplyOffset = !isValidStyleFile(file);
+
 		errors.forEach((error) => {
+			let offset = 0;
+			if (shouldApplyOffset) {
+				offset = cssRoot?.first?.source?.start?.line ?? 0;
+			}
+
+			const closestNode = getClosestNode(
+				cssRoot,
+				offset + error.source.start.line,
+				error.source.start.column
+			);
+			const closestLine =
+				closestNode?.source?.start?.line ?? error.source.start.line;
+
 			stylelint.utils.report({
 				ruleName: ruleName,
 				result: result,
-				node: cssRoot,
+				node: closestNode,
 				word: error.source.pattern,
-				line: error.source.start.line,
+				line: closestLine,
 				message: messages.report(error.message)
 			});
 		});

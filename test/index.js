@@ -454,8 +454,8 @@ describe('Check undefined functions', function () {
 					input: './fixtures/reject.undefined-functions.scss',
 					result: [
 						{
-							line: 1,
-							column: 2,
+							line: 3,
+							column: 9,
 							text: messages.report('Undefined function.')
 						}
 					]
