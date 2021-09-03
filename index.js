@@ -11,7 +11,6 @@ import path from 'path';
 import Ajv from 'ajv';
 import stylelint from 'stylelint';
 import renderErrorsFactory, {
-	undefinedFunctions,
 	undefinedFunctions as undefinedFunctionsFactory
 } from 'sass-render-errors';
 // @ts-ignore
@@ -80,7 +79,7 @@ const getConfigLocation = pMemoize(
  */
 function isValidStyleFile(file) {
 	const extension = path.extname(file);
-	return file !== '' && validStyleFileExtensions.includes(extension);
+	return file !== 'stdin' && validStyleFileExtensions.includes(extension);
 }
 
 /**
@@ -105,18 +104,17 @@ async function getSassOptions(input, configValue) {
 		config = configValue;
 	}
 
-	if (isValidStyleFile(file)) {
-		return {
-			...config,
-			file: file,
-			quietDeps: true
-		};
-	}
-	return {
+	const options = {
 		...config,
-		data: css,
 		quietDeps: true
 	};
+	if (file !== 'stdin') {
+		options.file = file;
+	}
+	if (!isValidStyleFile(file)) {
+		options.data = css;
+	}
+	return options;
 }
 
 /**
@@ -166,7 +164,7 @@ const plugin = stylelint.createPlugin(
 
 		/** @type {SassOptions} */
 		let sassOptions;
-		const file = cssRoot.source?.input.file ?? '';
+		const file = cssRoot.source?.input.file ?? 'stdin';
 		/*
 		 * PostCSS types don’t have "css" property even though it’s documented
 		 */
@@ -194,8 +192,7 @@ const plugin = stylelint.createPlugin(
 			return;
 		}
 
-		const renderers = [];
-		renderers.push(renderErrorsRenderer);
+		const renderers = [renderErrorsRenderer];
 		if (checkUndefinedFunctions) {
 			renderers.push(undefinedFunctionRenderer);
 		}
@@ -215,29 +212,31 @@ const plugin = stylelint.createPlugin(
 
 		const shouldApplyOffset = !isValidStyleFile(file);
 
-		errors.forEach((error) => {
-			let offset = 0;
-			if (shouldApplyOffset) {
-				offset = cssRoot?.first?.source?.start?.line ?? 0;
-			}
+		errors
+			.filter((error) => error.file === file)
+			.forEach((error) => {
+				let offset = 0;
+				if (shouldApplyOffset) {
+					offset = cssRoot?.first?.source?.start?.line ?? 0;
+				}
 
-			const closestNode = getClosestNode(
-				cssRoot,
-				offset + error.source.start.line,
-				error.source.start.column
-			);
-			const closestLine =
-				closestNode?.source?.start?.line ?? error.source.start.line;
+				const closestNode = getClosestNode(
+					cssRoot,
+					offset + error.source.start.line,
+					error.source.start.column
+				);
+				const closestLine =
+					closestNode?.source?.start?.line ?? error.source.start.line;
 
-			stylelint.utils.report({
-				ruleName: ruleName,
-				result: result,
-				node: closestNode,
-				word: error.source.pattern,
-				line: closestLine,
-				message: messages.report(error.message)
+				stylelint.utils.report({
+					ruleName: ruleName,
+					result: result,
+					node: closestNode,
+					word: error.source.pattern,
+					line: closestLine,
+					message: messages.report(error.message)
+				});
 			});
-		});
 	}
 );
 plugin.messages = messages;
