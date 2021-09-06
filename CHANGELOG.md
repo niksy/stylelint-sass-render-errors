@@ -2,6 +2,15 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for checking undefined functions
+
+### Fixed
+
+-   Get closest node with error
+-   Handle standard input
+
 ## [1.0.0][] - 2021-09-01
 
 ### Added
