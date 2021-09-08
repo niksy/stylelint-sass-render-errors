@@ -7,6 +7,13 @@
  * @typedef {import('sass-render-errors/esm/types').SassRenderError} SassRenderError
  */
 
+/**
+ * @typedef {object} PluginConfig
+ * @property {boolean}            sync
+ * @property {string|SassOptions} sassOptions
+ * @property {boolean}            checkUndefinedFunctions
+ */
+
 import path from 'path';
 import Ajv from 'ajv';
 import stylelint from 'stylelint';
@@ -34,9 +41,8 @@ const validateOptions = ajv.compile({
 				checkUndefinedFunctions: {
 					type: 'boolean'
 				},
-				renderMode: {
-					type: 'string',
-					enum: ['async', 'sync']
+				sync: {
+					type: 'boolean'
 				},
 				sassOptions: {
 					oneOf: [{ type: 'string' }, { type: 'object' }]
@@ -47,7 +53,7 @@ const validateOptions = ajv.compile({
 });
 
 const messages = stylelint.utils.ruleMessages(ruleName, {
-	report: (value) => value
+	report: (/** @type {string} */ value) => value
 });
 
 const renderErrorsRenderer = renderErrorsFactory(sass);
@@ -84,7 +90,7 @@ function isValidStyleFile(file) {
 
 /**
  * @param   {{ file: string, css: string }} input
- * @param   {string|object}                 configValue
+ * @param   {PluginConfig["sassOptions"]}   configValue
  *
  * @returns {Promise<SassOptions>}
  */
@@ -146,7 +152,7 @@ function getClosestNode(cssRoot, line, column) {
 
 const plugin = stylelint.createPlugin(
 	ruleName,
-	(resolveRules) => async (cssRoot, result) => {
+	(/** @type {PluginConfig} */ resolveRules) => async (cssRoot, result) => {
 		const validOptions = stylelint.utils.validateOptions(result, ruleName, {
 			actual: resolveRules,
 			possible: validateOptions
@@ -157,7 +163,7 @@ const plugin = stylelint.createPlugin(
 		}
 
 		const {
-			renderMode = 'async',
+			sync = false,
 			sassOptions: initialSassOptions = {},
 			checkUndefinedFunctions = false
 		} = resolveRules;
@@ -199,10 +205,10 @@ const plugin = stylelint.createPlugin(
 
 		const results = await Promise.all(
 			renderers.map((renderer) => {
-				if (renderMode === 'async') {
-					return renderer.render(sassOptions);
+				if (sync) {
+					return renderer.renderSync(sassOptions);
 				}
-				return renderer.renderSync(sassOptions);
+				return renderer.render(sassOptions);
 			})
 		);
 

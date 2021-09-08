@@ -72,25 +72,18 @@ If boolean, it will use default configuration:
 
 If object configuration, following properties are valid:
 
-### renderMode
-
-Type: `string`  
-Default: `async`
-
-Rendering mode for Sass render. Can be either `async` for `sass.render` or
-`sync` for `sass.renderSync`. This way you can
-[leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
-
-### checkUndefinedFunctions
+### sync
 
 Type: `boolean`  
 Default: `false`
 
-[Check undefined functions](https://github.com/niksy/sass-render-errors#undefined-functions).
+Rendering mode for Sass render. Can be either `false` for `sass.render` or
+`true` for `sass.renderSync`. This way you can
+[leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
 
 ### sassOptions
 
-Type: `object|string`
+Type: `string|SassOptions`
 
 If object, it is
 [Sass options](https://github.com/sass/dart-sass#javascript-api) object. For
@@ -107,6 +100,13 @@ Config file location is [resolved](https://github.com/sindresorhus/resolve-from)
 relatively from the
 [closest `package.json` location](https://github.com/sindresorhus/pkg-up) inside
 current working directory.
+
+### checkUndefinedFunctions
+
+Type: `boolean`  
+Default: `false`
+
+[Check undefined functions](https://github.com/niksy/sass-render-errors#undefined-functions).
 
 ## License
 

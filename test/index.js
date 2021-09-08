@@ -4,7 +4,7 @@ import { runCodeTest, runFileTest } from './util';
 const { ruleName, messages } = function_;
 
 describe('Config as object', function () {
-	[{ renderMode: 'async' }, { renderMode: 'sync' }].forEach((options) => {
+	[{ sync: false }, { sync: true }].forEach((options) => {
 		runFileTest({
 			ruleName: ruleName,
 			config: {
@@ -129,7 +129,7 @@ describe('Config as object', function () {
 });
 
 describe('Config as file returning (async) function', function () {
-	[{ renderMode: 'async' }, { renderMode: 'sync' }].forEach((options) => {
+	[{ sync: false }, { sync: true }].forEach((options) => {
 		runFileTest({
 			ruleName: ruleName,
 			config: {
@@ -281,7 +281,7 @@ describe('Config as file returning (async) function', function () {
 });
 
 describe('Config as file returning object', function () {
-	[{ renderMode: 'async' }, { renderMode: 'sync' }].forEach((options) => {
+	[{ sync: false }, { sync: true }].forEach((options) => {
 		runFileTest({
 			ruleName: ruleName,
 			config: {
@@ -434,8 +434,8 @@ describe('Config as file returning object', function () {
 
 describe('Check undefined functions', function () {
 	[
-		{ renderMode: 'async', checkUndefinedFunctions: true },
-		{ renderMode: 'sync', checkUndefinedFunctions: true }
+		{ sync: false, checkUndefinedFunctions: true },
+		{ sync: true, checkUndefinedFunctions: true }
 	].forEach((options) => {
 		runFileTest({
 			ruleName: ruleName,

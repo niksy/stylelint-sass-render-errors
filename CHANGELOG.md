@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Rename `renderMode` to `sync`
+
 ## [1.1.0][] - 2021-09-06
 
 ### Added
