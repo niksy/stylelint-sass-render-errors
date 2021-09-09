@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.0.1][] - 2021-09-09
+
 ### Changed
 
 -   Return unique collection of errors
@@ -38,3 +40,6 @@
 [unreleased]:
 	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.0
+[unreleased]:
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.1
