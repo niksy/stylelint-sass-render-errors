@@ -150,6 +150,20 @@ function getClosestNode(cssRoot, line, column) {
 	return nodes[closestNode.index] ?? cssRoot;
 }
 
+/**
+ * @param {SassRenderError[]} errors
+ */
+function unique(errors) {
+	/* eslint-disable unicorn/prefer-spread */
+	/** @type {[string, SassRenderError][]} */
+	const collection = errors.map((entry) => {
+		const { stack, ...key } = entry;
+		return [JSON.stringify(key), entry];
+	});
+	const map = new Map(collection);
+	return Array.from(map.values());
+}
+
 const plugin = stylelint.createPlugin(
 	ruleName,
 	(/** @type {PluginConfig} */ resolveRules) => async (cssRoot, result) => {
@@ -218,7 +232,7 @@ const plugin = stylelint.createPlugin(
 
 		const shouldApplyOffset = !isValidStyleFile(file);
 
-		errors
+		unique(errors)
 			.filter((error) => error.file === file)
 			.forEach((error) => {
 				let offset = 0;

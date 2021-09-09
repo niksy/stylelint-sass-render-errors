@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Return unique collection of errors
+
 ## [2.0.0][] - 2021-09-08
 
 ### Changed
