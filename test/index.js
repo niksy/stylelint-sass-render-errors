@@ -471,7 +471,7 @@ describe('Check undefined functions', function () {
 			},
 			accept: [
 				{
-					input: 'body { width: calc(100 + 1px); }',
+					input: 'body { width: calc(100px + 1px); }',
 					result: []
 				}
 			],

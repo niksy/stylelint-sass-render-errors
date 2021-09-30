@@ -33,7 +33,6 @@
     "test": "([ -z $WATCH_TEST ] && npm run lint || echo) && BABEL_ENV=test nyc mocha --require @babel/register --require esm 'test/**/*.js' && nyc check-coverage",
     "test:watch": "WATCH_TEST=1 nodemon --exec npm test",
     "build": "rollup --config rollup.config.js",
-    "premodule-check": "[[ $(uname -m) == arm64 && $(which brew) && -f \"$(brew --prefix nvm)/nvm.sh\" ]] && source \"$(brew --prefix nvm)/nvm.sh\" || true && nvm use 16 || true && echo $(dirname $(which node)) > .node",
     "module-check": "export PATH=$(head .node):$PATH; rm -rf .node && node -e 'require(\"stylelint-sass-render-errors\");' && node --input-type=module -e 'import \"stylelint-sass-render-errors\";'",
     "prepublishOnly": "npm run build && npm run lint:types && npm run module-check",
     "lint:types": "tsc"
