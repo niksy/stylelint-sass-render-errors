@@ -26,16 +26,17 @@
     "README.md"
   ],
   "scripts": {
-    "release": "np --no-release-draft",
-    "version": "if [ $(git rev-parse --abbrev-ref HEAD) == 'master' ]; then version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md; else echo; fi",
-    "postpublish": "GITHUB_TOKEN=$GITHUB_RELEASE_TOKEN github-release-from-changelog",
-    "lint": "eslint '{index,lib/**/*,test/**/*}.js'",
-    "test": "([ -z $WATCH_TEST ] && npm run lint || echo) && BABEL_ENV=test nyc mocha --require @babel/register --require esm 'test/**/*.js' && nyc check-coverage",
-    "test:watch": "WATCH_TEST=1 nodemon --exec npm test",
     "build": "rollup --config rollup.config.js",
-    "module-check": "export PATH=$(head .node):$PATH; rm -rf .node && node -e 'require(\"stylelint-sass-render-errors\");' && node --input-type=module -e 'import \"stylelint-sass-render-errors\";'",
-    "prepublishOnly": "npm run build && npm run lint:types && npm run module-check",
-    "lint:types": "tsc"
+    "lint": "eslint '{index,lib/**/*,test/**/*}.js'",
+    "lint:types": "tsc",
+    "module-check": "node -e 'require(\"stylelint-sass-render-errors\");' && node --input-type=module -e 'import \"stylelint-sass-render-errors\";'",
+    "prepublishOnly": "npm run build",
+    "postpublish": "GITHUB_TOKEN=$GITHUB_RELEASE_TOKEN github-release-from-changelog",
+    "prerelease": "npm run lint && npm run lint:types && npm run build && npm run module-check",
+    "release": "np --no-release-draft",
+    "test": "BABEL_ENV=test nyc mocha --require @babel/register --require esm 'test/**/*.js' && nyc check-coverage",
+    "test:watch": "nodemon --exec npm test",
+    "version": "if [ $(git rev-parse --abbrev-ref HEAD) == 'master' ]; then version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md; else echo; fi"
   },
   "dependencies": {
     "ajv": "^8.6.2",
@@ -78,7 +79,7 @@
     "nodemon": "^2.0.6",
     "np": "^6.5.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.1.2",
+    "prettier": "^2.4.0",
     "rollup": "^2.32.1",
     "sass": "^1.38.2",
     "stylelint": "^13.13.1",

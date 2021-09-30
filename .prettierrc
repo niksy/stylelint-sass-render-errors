@@ -8,7 +8,7 @@
 	"jsxSingleQuote": true,
 	"trailingComma": "none",
 	"bracketSpacing": true,
-	"jsxBracketSameLine": false,
+	"bracketSameLine": false,
 	"arrowParens": "always",
 	"requirePragma": false,
 	"insertPragma": false,
@@ -19,7 +19,7 @@
 	"embeddedLanguageFormatting": "auto",
 	"overrides": [
 		{
-			"files": "package.json",
+			"files": ["package.json", "*.yml"],
 			"options": {
 				"useTabs": false,
 				"tabWidth": 2

@@ -121,7 +121,7 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 <!-- prettier-ignore-start -->
 
-[ci]: https://travis-ci.com/niksy/stylelint-sass-render-errors
-[ci-img]: https://travis-ci.com/niksy/stylelint-sass-render-errors.svg?branch=master
+[ci]: https://github.com/niksy/stylelint-sass-render-errors/actions?query=workflow%3ACI
+[ci-img]: https://github.com/niksy/stylelint-sass-render-errors/workflows/CI/badge.svg?branch=master
 
 <!-- prettier-ignore-end -->
