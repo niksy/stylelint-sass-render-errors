@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.1.0][] - 2021-09-30
+
 ### Added
 
 -   Support for disallowed known CSS functions
@@ -47,3 +49,6 @@
 [unreleased]:
 	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.0.1...HEAD
 [2.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.1
+[unreleased]:
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.1.0
