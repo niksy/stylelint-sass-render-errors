@@ -12,6 +12,7 @@
  * @property {boolean}            sync
  * @property {string|SassOptions} sassOptions
  * @property {boolean}            checkUndefinedFunctions
+ * @property {string[]}           disallowedKnownCssFunctions
  */
 
 import path from 'path';
@@ -20,11 +21,12 @@ import stylelint from 'stylelint';
 import renderErrorsFactory, {
 	undefinedFunctions as undefinedFunctionsFactory
 } from 'sass-render-errors';
-// @ts-ignore
 import sass from 'sass';
 import pkgUp from 'pkg-up';
 import resolveFrom from 'resolve-from';
 import pMemoize from 'p-memoize';
+import memoize from 'mem';
+import ManyKeysMap from 'many-keys-map';
 
 const ruleName = 'plugin/sass-render-errors';
 
@@ -41,6 +43,9 @@ const validateOptions = ajv.compile({
 				checkUndefinedFunctions: {
 					type: 'boolean'
 				},
+				disallowedKnownCssFunctions: {
+					type: 'array'
+				},
 				sync: {
 					type: 'boolean'
 				},
@@ -56,8 +61,14 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 	report: (/** @type {string} */ value) => value
 });
 
-const renderErrorsRenderer = renderErrorsFactory(sass);
-const undefinedFunctionRenderer = undefinedFunctionsFactory(sass);
+const renderErrorsRenderer = memoize(renderErrorsFactory);
+const undefinedFunctionRenderer = memoize(undefinedFunctionsFactory, {
+	cacheKey: ([sassInstance, ...arguments_]) => [
+		sassInstance,
+		JSON.stringify(arguments_)
+	],
+	cache: new ManyKeysMap()
+});
 
 const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
 	let config;
@@ -179,7 +190,8 @@ const plugin = stylelint.createPlugin(
 		const {
 			sync = false,
 			sassOptions: initialSassOptions = {},
-			checkUndefinedFunctions = false
+			checkUndefinedFunctions = false,
+			disallowedKnownCssFunctions = []
 		} = resolveRules;
 
 		/** @type {SassOptions} */
@@ -212,9 +224,11 @@ const plugin = stylelint.createPlugin(
 			return;
 		}
 
-		const renderers = [renderErrorsRenderer];
+		const renderers = [renderErrorsRenderer(sass)];
 		if (checkUndefinedFunctions) {
-			renderers.push(undefinedFunctionRenderer);
+			renderers.push(
+				undefinedFunctionRenderer(sass, { disallowedKnownCssFunctions })
+			);
 		}
 
 		const results = await Promise.all(

@@ -490,3 +490,70 @@ describe('Check undefined functions', function () {
 		});
 	});
 });
+
+describe('Check undefined functions, disallowed known CSS functions', function () {
+	[
+		{
+			sync: false,
+			checkUndefinedFunctions: true,
+			disallowedKnownCssFunctions: ['rem']
+		},
+		{
+			sync: true,
+			checkUndefinedFunctions: true,
+			disallowedKnownCssFunctions: ['rem']
+		}
+	].forEach((options) => {
+		runFileTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: './fixtures/accept.scss',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: './fixtures/reject.undefined-functions.disallowed-functions.scss',
+					result: [
+						{
+							line: 2,
+							column: 14,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+
+		runCodeTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: 'body { width: calc(100px + 1px); }',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: 'body { min-height: rem(10); }',
+					result: [
+						{
+							line: 1,
+							column: 20,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+	});
+});

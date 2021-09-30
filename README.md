@@ -108,6 +108,13 @@ Default: `false`
 
 [Check undefined functions](https://github.com/niksy/sass-render-errors#undefined-functions).
 
+### disallowedKnownCssFunctions
+
+Type: `string[]`  
+Default: `[]`
+
+[List of disallowed known CSS functions](https://github.com/niksy/sass-render-errors#options).
+
 ## License
 
 MIT © [Ivan Nikolić](http://ivannikolic.com)
