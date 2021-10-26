@@ -2,6 +2,12 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   **Breaking**: Supports Node >= 12
+-   **Breaking**: Supports Stylelint >= 14
+-   Upgrade package
+
 ## [2.1.0][] - 2021-09-30
 
 ### Added
@@ -37,17 +43,9 @@
 
 -   Initial implementation
 
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v1.0.0
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v1.1.0...HEAD
 [1.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v1.1.0
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.0
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.0.1...HEAD
 [2.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.1
 [unreleased]:
 	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.1.0...HEAD

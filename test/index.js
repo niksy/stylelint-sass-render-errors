@@ -14,12 +14,14 @@ describe('Config as object', function () {
 			accept: [
 				{
 					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -32,6 +34,7 @@ describe('Config as object', function () {
 				},
 				{
 					input: './fixtures/reject.deprecations.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 5,
@@ -63,6 +66,7 @@ describe('Config as object', function () {
 			accept: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -78,12 +82,14 @@ describe('Config as object', function () {
 			accept: [
 				{
 					input: '@use "sass:math";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -96,6 +102,7 @@ describe('Config as object', function () {
 				},
 				{
 					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -120,6 +127,7 @@ describe('Config as object', function () {
 			accept: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -139,12 +147,14 @@ describe('Config as file returning (async) function', function () {
 			accept: [
 				{
 					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -157,6 +167,7 @@ describe('Config as file returning (async) function', function () {
 				},
 				{
 					input: './fixtures/reject.errors.vue',
+					customSyntax: 'postcss-html',
 					result: [
 						{
 							line: 4,
@@ -169,6 +180,7 @@ describe('Config as file returning (async) function', function () {
 				},
 				{
 					input: './fixtures/reject.deprecations.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 5,
@@ -188,6 +200,7 @@ describe('Config as file returning (async) function', function () {
 				},
 				{
 					input: './fixtures/reject.deprecations.vue',
+					customSyntax: 'postcss-html',
 					result: [
 						{
 							line: 8,
@@ -217,6 +230,7 @@ describe('Config as file returning (async) function', function () {
 			accept: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -232,12 +246,14 @@ describe('Config as file returning (async) function', function () {
 			accept: [
 				{
 					input: '@use "sass:math";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -250,6 +266,7 @@ describe('Config as file returning (async) function', function () {
 				},
 				{
 					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -272,6 +289,7 @@ describe('Config as file returning (async) function', function () {
 			accept: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -291,12 +309,14 @@ describe('Config as file returning object', function () {
 			accept: [
 				{
 					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -309,6 +329,7 @@ describe('Config as file returning object', function () {
 				},
 				{
 					input: './fixtures/reject.errors.vue',
+					customSyntax: 'postcss-html',
 					result: [
 						{
 							line: 4,
@@ -321,6 +342,7 @@ describe('Config as file returning object', function () {
 				},
 				{
 					input: './fixtures/reject.deprecations.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 5,
@@ -340,6 +362,7 @@ describe('Config as file returning object', function () {
 				},
 				{
 					input: './fixtures/reject.deprecations.vue',
+					customSyntax: 'postcss-html',
 					result: [
 						{
 							line: 8,
@@ -369,6 +392,7 @@ describe('Config as file returning object', function () {
 			accept: [
 				{
 					input: './fixtures/reject.errors.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -384,12 +408,14 @@ describe('Config as file returning object', function () {
 			accept: [
 				{
 					input: '@use "sass:math";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -402,6 +428,7 @@ describe('Config as file returning object', function () {
 				},
 				{
 					input: '@use "sass:color"; .becky { color: color.invert(1); }',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -424,6 +451,7 @@ describe('Config as file returning object', function () {
 			accept: [
 				{
 					input: '@use "loki";',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
@@ -446,12 +474,14 @@ describe('Check undefined functions', function () {
 			accept: [
 				{
 					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: './fixtures/reject.undefined-functions.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 3,
@@ -472,12 +502,14 @@ describe('Check undefined functions', function () {
 			accept: [
 				{
 					input: 'body { width: calc(100px + 1px); }',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: 'body { width: becky(#f00); }',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
@@ -513,12 +545,14 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 			accept: [
 				{
 					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: './fixtures/reject.undefined-functions.disallowed-functions.scss',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 2,
@@ -539,12 +573,14 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 			accept: [
 				{
 					input: 'body { width: calc(100px + 1px); }',
+					customSyntax: 'postcss-scss',
 					result: []
 				}
 			],
 			reject: [
 				{
 					input: 'body { min-height: rem(10); }',
+					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
