@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [3.0.0][] - 2021-10-26
+
 ### Changed
 
 -   **Breaking**: Supports Node >= 12
@@ -50,3 +52,6 @@
 [unreleased]:
 	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.1.0...HEAD
 [2.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.1.0
+[unreleased]:
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
