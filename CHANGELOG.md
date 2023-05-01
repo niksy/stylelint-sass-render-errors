@@ -2,6 +2,12 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Bump package version to fetch related Sass dependencies
+
+*   Update types
+
 ## [3.0.0][] - 2021-10-26
 
 ### Changed
