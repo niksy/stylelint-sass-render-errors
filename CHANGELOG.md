@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [3.0.1][] - 2023-05-01
+
 ### Changed
 
 -   Bump package version to fetch related Sass dependencies
@@ -61,3 +63,6 @@
 [unreleased]:
 	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.0...HEAD
 [3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
+[Unreleased]:
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.1...HEAD
+[3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
