@@ -26,6 +26,8 @@ describe('Config as object', function () {
 						{
 							line: 1,
 							column: 9,
+							endLine: 1,
+							endColumn: 15,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -39,6 +41,8 @@ describe('Config as object', function () {
 						{
 							line: 5,
 							column: 9,
+							endLine: 5,
+							endColumn: 24,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -46,6 +50,8 @@ describe('Config as object', function () {
 						{
 							line: 9,
 							column: 25,
+							endLine: 9,
+							endColumn: 32,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
 							)
@@ -94,6 +100,8 @@ describe('Config as object', function () {
 						{
 							line: 1,
 							column: 1,
+							endLine: 1,
+							endColumn: 12,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -107,6 +115,8 @@ describe('Config as object', function () {
 						{
 							line: 1,
 							column: 36,
+							endLine: 1,
+							endColumn: 51,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -159,6 +169,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 1,
 							column: 9,
+							endLine: 1,
+							endColumn: 15,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -172,6 +184,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 4,
 							column: 9,
+							endLine: 4,
+							endColumn: 15,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -185,6 +199,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 5,
 							column: 9,
+							endLine: 5,
+							endColumn: 24,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -192,6 +208,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 9,
 							column: 25,
+							endLine: 9,
+							endColumn: 32,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
 							)
@@ -205,6 +223,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 8,
 							column: 9,
+							endLine: 8,
+							endColumn: 24,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -212,6 +232,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 12,
 							column: 25,
+							endLine: 12,
+							endColumn: 32,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
 							)
@@ -258,6 +280,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 1,
 							column: 1,
+							endLine: 1,
+							endColumn: 12,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -271,6 +295,8 @@ describe('Config as file returning (async) function', function () {
 						{
 							line: 1,
 							column: 36,
+							endLine: 1,
+							endColumn: 51,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -321,6 +347,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 1,
 							column: 9,
+							endLine: 1,
+							endColumn: 15,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -334,6 +362,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 4,
 							column: 9,
+							endLine: 4,
+							endColumn: 15,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -347,6 +377,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 5,
 							column: 9,
+							endLine: 5,
+							endColumn: 24,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -354,6 +386,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 9,
 							column: 25,
+							endLine: 9,
+							endColumn: 32,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
 							)
@@ -367,6 +401,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 8,
 							column: 9,
+							endLine: 8,
+							endColumn: 24,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -374,6 +410,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 12,
 							column: 25,
+							endLine: 12,
+							endColumn: 32,
 							text: messages.report(
 								'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.'
 							)
@@ -420,6 +458,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 1,
 							column: 1,
+							endLine: 1,
+							endColumn: 12,
 							text: messages.report(
 								"Can't find stylesheet to import."
 							)
@@ -433,6 +473,8 @@ describe('Config as file returning object', function () {
 						{
 							line: 1,
 							column: 36,
+							endLine: 1,
+							endColumn: 51,
 							text: messages.report(
 								'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).'
 							)
@@ -486,6 +528,8 @@ describe('Check undefined functions', function () {
 						{
 							line: 3,
 							column: 9,
+							endLine: 3,
+							endColumn: 14,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -514,6 +558,8 @@ describe('Check undefined functions', function () {
 						{
 							line: 1,
 							column: 15,
+							endLine: 1,
+							endColumn: 20,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -557,6 +603,8 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 						{
 							line: 2,
 							column: 14,
+							endLine: 2,
+							endColumn: 17,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -585,6 +633,8 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 						{
 							line: 1,
 							column: 20,
+							endLine: 1,
+							endColumn: 23,
 							text: messages.report('Undefined function.')
 						}
 					]
