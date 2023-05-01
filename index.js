@@ -3,16 +3,17 @@
 /**
  * @typedef {import('postcss').Root} Root
  * @typedef {import('postcss').ChildNode} ChildNode
- * @typedef {import('sass-render-errors/esm/types').Options} SassOptions
+ * @typedef {import('sass').LegacyOptions<"async">} SassAsyncOptions
+ * @typedef {import('sass').LegacyOptions<"sync">} SassSyncOptions
  * @typedef {import('sass-render-errors/esm/types').SassRenderError} SassRenderError
  */
 
 /**
  * @typedef {object} PluginConfig
- * @property {boolean}            sync
- * @property {string|SassOptions} sassOptions
- * @property {boolean}            checkUndefinedFunctions
- * @property {string[]}           disallowedKnownCssFunctions
+ * @property {boolean}                                 sync
+ * @property {string|SassAsyncOptions|SassSyncOptions} sassOptions
+ * @property {boolean}                                 checkUndefinedFunctions
+ * @property {string[]}                                disallowedKnownCssFunctions
  */
 
 import path from 'path';
@@ -70,6 +71,7 @@ const undefinedFunctionRenderer = memoize(undefinedFunctionsFactory, {
 	cache: new ManyKeysMap()
 });
 
+// @ts-ignore
 const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
 	let config;
 	const { default: importedConfig } = await import(configLocation);
@@ -82,6 +84,7 @@ const importConfig = pMemoize(async (/** @type {string} */ configLocation) => {
 });
 
 const getConfigLocation = pMemoize(
+	// @ts-ignore
 	async (/** @type {string} */ cwd, /** @type {string} */ configValue) => {
 		const packagePath = await pkgUp({ cwd });
 		const startingLocation = path.dirname(packagePath ?? cwd);
@@ -100,14 +103,14 @@ function isValidStyleFile(file) {
 }
 
 /**
- * @param   {{ file: string, css: string }} input
- * @param   {PluginConfig["sassOptions"]}   configValue
+ * @param   {{ file: string, css: string }}             input
+ * @param   {PluginConfig["sassOptions"]}               configValue
  *
- * @returns {Promise<SassOptions>}
+ * @returns {Promise<SassAsyncOptions|SassSyncOptions>}
  */
 async function getSassOptions(input, configValue) {
 	const { file, css } = input;
-	/** @type {SassOptions} */
+	/** @type {SassAsyncOptions|SassSyncOptions} */
 	let config;
 
 	if (typeof configValue === 'string') {
@@ -175,9 +178,11 @@ function unique(errors) {
 	return Array.from(map.values());
 }
 
-const plugin = stylelint.createPlugin(
-	ruleName,
-	(/** @type {PluginConfig} */ resolveRules) => async (cssRoot, result) => {
+/**
+ * @type  {stylelint.RuleBase}
+ */
+function ruleFunction(resolveRules) {
+	return async (cssRoot, result) => {
 		const validOptions = stylelint.utils.validateOptions(result, ruleName, {
 			actual: resolveRules,
 			possible: validateOptions
@@ -194,7 +199,7 @@ const plugin = stylelint.createPlugin(
 			disallowedKnownCssFunctions = []
 		} = resolveRules;
 
-		/** @type {SassOptions} */
+		/** @type {SassAsyncOptions|SassSyncOptions} */
 		let sassOptions;
 		const file = cssRoot.source?.input.file ?? 'stdin';
 		/*
@@ -227,7 +232,10 @@ const plugin = stylelint.createPlugin(
 		const renderers = [renderErrorsRenderer(sass)];
 		if (checkUndefinedFunctions) {
 			renderers.push(
-				undefinedFunctionRenderer(sass, { disallowedKnownCssFunctions })
+				// @ts-ignore
+				undefinedFunctionRenderer(sass, {
+					disallowedKnownCssFunctions
+				})
 			);
 		}
 
@@ -271,7 +279,10 @@ const plugin = stylelint.createPlugin(
 					message: messages.report(error.message)
 				});
 			});
-	}
-);
+	};
+}
+
+// @ts-ignore
+const plugin = stylelint.createPlugin(ruleName, ruleFunction);
 
 export default { ...plugin, messages };
