@@ -259,7 +259,10 @@ function ruleFunction(resolveRules) {
 			.forEach((error) => {
 				let offset = 0;
 				if (shouldApplyOffset) {
-					offset = cssRoot?.first?.source?.start?.line ?? 0;
+					offset = Math.max(
+						(cssRoot?.first?.source?.start?.line ?? 0) - 1,
+						0
+					);
 				}
 
 				const closestNode = getClosestNode(

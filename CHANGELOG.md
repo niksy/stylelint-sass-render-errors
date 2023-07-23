@@ -2,13 +2,16 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Calculate proper offset for non-CSS starting line ([#3](/issues/3))
+
 ## [3.0.1][] - 2023-05-01
 
 ### Changed
 
 -   Bump package version to fetch related Sass dependencies
-
-*   Update types
+-   Update types
 
 ## [3.0.0][] - 2021-10-26
 
@@ -57,12 +60,6 @@
 [1.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v1.1.0
 [2.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.0
 [2.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.0.1
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v2.1.0...HEAD
 [2.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.1.0
-[unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.0...HEAD
 [3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
-[Unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.1...HEAD
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
