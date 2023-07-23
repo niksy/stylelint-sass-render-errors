@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [3.0.2][] - 2023-07-23
+
 ### Fixed
 
 -   Calculate proper offset for non-CSS starting line ([#3](/issues/3))
@@ -63,3 +65,6 @@
 [2.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.1.0
 [3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
+[Unreleased]:
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.2...HEAD
+[3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
