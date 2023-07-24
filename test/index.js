@@ -533,6 +533,19 @@ describe('Check undefined functions', function () {
 							text: messages.report('Undefined function.')
 						}
 					]
+				},
+				{
+					input: './fixtures/reject.undefined-functions.vue',
+					customSyntax: 'postcss-html',
+					result: [
+						{
+							line: 6,
+							column: 9,
+							endLine: 6,
+							endColumn: 14,
+							text: messages.report('Undefined function.')
+						}
+					]
 				}
 			]
 		});
@@ -604,6 +617,19 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 							line: 2,
 							column: 14,
 							endLine: 2,
+							endColumn: 17,
+							text: messages.report('Undefined function.')
+						}
+					]
+				},
+				{
+					input: './fixtures/reject.undefined-functions.disallowed-functions.vue',
+					customSyntax: 'postcss-html',
+					result: [
+						{
+							line: 5,
+							column: 14,
+							endLine: 5,
 							endColumn: 17,
 							text: messages.report('Undefined function.')
 						}
