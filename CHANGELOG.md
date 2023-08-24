@@ -2,6 +2,12 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Allow Stylelint 15 as peer dependancy
+-   Use pure ESM as default
+-   Upgrade package
+
 ## [3.0.2][] - 2023-07-23
 
 ### Fixed
@@ -65,6 +71,4 @@
 [2.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v2.1.0
 [3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
-[Unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.0.2...HEAD
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
