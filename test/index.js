@@ -1,6 +1,7 @@
-import function_ from '../index';
-import { runCodeTest, runFileTest } from './util';
+import function_ from '../index.js';
+import { runCodeTest, runFileTest } from './util/index.js';
 
+// @ts-ignore
 const { ruleName, messages } = function_;
 
 describe('Config as object', function () {
@@ -152,7 +153,7 @@ describe('Config as file returning (async) function', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.function'
+				sassOptions: './test/fixtures/config.function.cjs'
 			},
 			accept: [
 				{
@@ -247,7 +248,7 @@ describe('Config as file returning (async) function', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.function.options'
+				sassOptions: './test/fixtures/config.function.options.cjs'
 			},
 			accept: [
 				{
@@ -263,7 +264,7 @@ describe('Config as file returning (async) function', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.function'
+				sassOptions: './test/fixtures/config.function.cjs'
 			},
 			accept: [
 				{
@@ -310,7 +311,7 @@ describe('Config as file returning (async) function', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.function.options'
+				sassOptions: './test/fixtures/config.function.options.cjs'
 			},
 			accept: [
 				{
@@ -330,7 +331,7 @@ describe('Config as file returning object', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.object'
+				sassOptions: './test/fixtures/config.object.cjs'
 			},
 			accept: [
 				{
@@ -425,7 +426,7 @@ describe('Config as file returning object', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.object.options'
+				sassOptions: './test/fixtures/config.object.options.cjs'
 			},
 			accept: [
 				{
@@ -441,7 +442,7 @@ describe('Config as file returning object', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.object'
+				sassOptions: './test/fixtures/config.object.cjs'
 			},
 			accept: [
 				{
@@ -488,7 +489,7 @@ describe('Config as file returning object', function () {
 			ruleName: ruleName,
 			config: {
 				...options,
-				sassOptions: './test/fixtures/config.object.options'
+				sassOptions: './test/fixtures/config.object.options.cjs'
 			},
 			accept: [
 				{

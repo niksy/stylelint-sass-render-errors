@@ -1,8 +1,14 @@
 /* eslint-disable mocha/no-exports */
 
 import path from 'path';
+import { fileURLToPath } from 'url';
 import assert from 'assert';
-import { lint } from 'stylelint';
+import stylelint from 'stylelint';
+import plugin from '../../index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const { lint } = stylelint;
 
 /**
  * @typedef {import('stylelint').CustomSyntax} CustomSyntax
@@ -38,7 +44,7 @@ export const runCodeTest = (options) => {
 				code: input,
 				customSyntax: customSyntax ?? syntax,
 				config: {
-					plugins: [path.resolve(__dirname, '../../index.js')],
+					plugins: [plugin],
 					rules: {
 						[ruleName]: config
 					}
@@ -61,7 +67,7 @@ export const runCodeTest = (options) => {
 					code: input,
 					customSyntax: customSyntax ?? syntax,
 					config: {
-						plugins: [path.resolve(__dirname, '../../index.js')],
+						plugins: [plugin],
 						rules: {
 							[ruleName]: config
 						}
@@ -92,7 +98,7 @@ export const runFileTest = (options) => {
 				files: path.resolve(__dirname, '../', input),
 				customSyntax: customSyntax ?? syntax,
 				config: {
-					plugins: [path.resolve(__dirname, '../../index.js')],
+					plugins: [plugin],
 					rules: {
 						[ruleName]: config
 					}
@@ -115,7 +121,7 @@ export const runFileTest = (options) => {
 					files: path.resolve(__dirname, '../', input),
 					customSyntax: customSyntax ?? syntax,
 					config: {
-						plugins: [path.resolve(__dirname, '../../index.js')],
+						plugins: [plugin],
 						rules: {
 							[ruleName]: config
 						}
