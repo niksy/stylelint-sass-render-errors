@@ -73,12 +73,18 @@ export const runCodeTest = (options) => {
 						}
 					}
 				});
-				const [{ rule, severity, ...warning }] = warnings;
-				assert.deepEqual(
-					warning,
-					result[0],
-					'Expected different warning'
+				assert.equal(
+					warnings.length,
+					result.length,
+					`Not all warnings have been covered for reject case`
 				);
+				warnings.forEach(({ rule, severity, ...warning }, index) => {
+					assert.deepEqual(
+						warning,
+						result[index],
+						`Warning is not covered: "${warning.text}"`
+					);
+				});
 			});
 		}
 	);

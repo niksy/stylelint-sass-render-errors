@@ -46,7 +46,7 @@
     "p-memoize": "^4.0.1",
     "pkg-up": "^3.1.0",
     "resolve-from": "^5.0.0",
-    "sass-render-errors": "^1.8.3"
+    "sass-render-errors": "^1.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

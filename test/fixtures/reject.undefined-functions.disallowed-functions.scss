@@ -1,3 +1,4 @@
 .becky {
 	min-height: rem(10);
+	height: v-bind(height);
 }

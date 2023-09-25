@@ -583,7 +583,7 @@ describe('Check undefined functions', function () {
 	});
 });
 
-describe('Check undefined functions, disallowed known CSS functions', function () {
+describe('Check undefined functions, disallowed known and additional unknown CSS functions', function () {
 	[
 		{
 			sync: false,
@@ -594,6 +594,117 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 			sync: true,
 			checkUndefinedFunctions: true,
 			disallowedKnownCssFunctions: ['rem']
+		}
+	].forEach((options) => {
+		runFileTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: './fixtures/accept.scss',
+					customSyntax: 'postcss-scss',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: './fixtures/reject.undefined-functions.disallowed-functions.scss',
+					customSyntax: 'postcss-scss',
+					result: [
+						{
+							line: 2,
+							column: 14,
+							endLine: 2,
+							endColumn: 17,
+							text: messages.report('Undefined function.')
+						},
+						{
+							line: 3,
+							column: 10,
+							endLine: 3,
+							endColumn: 16,
+							text: messages.report('Undefined function.')
+						}
+					]
+				},
+				{
+					input: './fixtures/reject.undefined-functions.disallowed-functions.vue',
+					customSyntax: 'postcss-html',
+					result: [
+						{
+							line: 5,
+							column: 14,
+							endLine: 5,
+							endColumn: 17,
+							text: messages.report('Undefined function.')
+						},
+						{
+							line: 6,
+							column: 10,
+							endLine: 6,
+							endColumn: 16,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+
+		runCodeTest({
+			ruleName: ruleName,
+			config: {
+				...options,
+				sassOptions: {}
+			},
+			accept: [
+				{
+					input: 'body { width: calc(100px + 1px); }',
+					customSyntax: 'postcss-scss',
+					result: []
+				}
+			],
+			reject: [
+				{
+					input: 'body { min-height: rem(10); height: v-bind(height); }',
+					customSyntax: 'postcss-scss',
+					result: [
+						{
+							line: 1,
+							column: 20,
+							endLine: 1,
+							endColumn: 23,
+							text: messages.report('Undefined function.')
+						},
+						{
+							line: 1,
+							column: 37,
+							endLine: 1,
+							endColumn: 43,
+							text: messages.report('Undefined function.')
+						}
+					]
+				}
+			]
+		});
+	});
+});
+
+describe('Check undefined functions, disallowed known and allowed additional known CSS functions', function () {
+	[
+		{
+			sync: false,
+			checkUndefinedFunctions: true,
+			disallowedKnownCssFunctions: ['rem'],
+			additionalKnownCssFunctions: ['v-bind']
+		},
+		{
+			sync: true,
+			checkUndefinedFunctions: true,
+			disallowedKnownCssFunctions: ['rem'],
+			additionalKnownCssFunctions: ['v-bind']
 		}
 	].forEach((options) => {
 		runFileTest({
@@ -654,7 +765,7 @@ describe('Check undefined functions, disallowed known CSS functions', function (
 			],
 			reject: [
 				{
-					input: 'body { min-height: rem(10); }',
+					input: 'body { min-height: rem(10); height: v-bind(height); }',
 					customSyntax: 'postcss-scss',
 					result: [
 						{

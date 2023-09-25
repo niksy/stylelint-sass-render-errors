@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Add support for additional known CSS functions
+
 ## [3.1.0][] - 2023-08-24
 
 ### Changed
@@ -74,6 +78,4 @@
 [3.0.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.0
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
-[Unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.1.0...HEAD
 [3.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.1.0

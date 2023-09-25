@@ -6,6 +6,7 @@
  * @typedef {import('sass').LegacyOptions<"async">} SassAsyncOptions
  * @typedef {import('sass').LegacyOptions<"sync">} SassSyncOptions
  * @typedef {import('sass-render-errors/esm/types').SassRenderError} SassRenderError
+ * @typedef {import('sass-render-errors/esm/lib/undefined-functions').Options} Options
  */
 
 /**
@@ -13,7 +14,8 @@
  * @property {boolean}                                 sync
  * @property {string|SassAsyncOptions|SassSyncOptions} sassOptions
  * @property {boolean}                                 checkUndefinedFunctions
- * @property {string[]}                                disallowedKnownCssFunctions
+ * @property {Options["disallowedKnownCssFunctions"]}  disallowedKnownCssFunctions
+ * @property {Options["additionalKnownCssFunctions"]}  additionalKnownCssFunctions
  */
 
 import path from 'path';
@@ -45,6 +47,9 @@ const validateOptions = ajv.compile({
 					type: 'boolean'
 				},
 				disallowedKnownCssFunctions: {
+					type: 'array'
+				},
+				additionalKnownCssFunctions: {
 					type: 'array'
 				},
 				sync: {
@@ -152,16 +157,27 @@ function getClosestNode(cssRoot, line, column) {
 		}
 	});
 
-	const closestNode = { diff: Infinity, index: -1 };
+	let closestIndex = 0;
+	let closestDistance = Number.MAX_VALUE;
 
 	nodes.forEach((node, index) => {
-		const diff = Math.abs((node?.source?.start?.column ?? 0) - column);
-		if (diff < closestNode.diff) {
-			closestNode.diff = diff;
-			closestNode.index = index;
+		const startDistance = Math.sqrt(
+			Math.pow((node?.source?.start?.line ?? 1) - line, 2) +
+				Math.pow((node?.source?.start?.column ?? 0) - column, 2)
+		);
+		const endDistance = Math.sqrt(
+			Math.pow((node?.source?.end?.line ?? 1) - line, 2) +
+				Math.pow((node?.source?.end?.column ?? 0) - column, 2)
+		);
+		const minDistance = Math.min(startDistance, endDistance);
+
+		if (minDistance < closestDistance) {
+			closestDistance = minDistance;
+			closestIndex = index;
 		}
 	});
-	return nodes[closestNode.index] ?? cssRoot;
+
+	return nodes[closestIndex] ?? cssRoot;
 }
 
 /**
@@ -196,7 +212,8 @@ function ruleFunction(resolveRules) {
 			sync = false,
 			sassOptions: initialSassOptions = {},
 			checkUndefinedFunctions = false,
-			disallowedKnownCssFunctions = []
+			disallowedKnownCssFunctions = [],
+			additionalKnownCssFunctions = []
 		} = resolveRules;
 
 		/** @type {SassAsyncOptions|SassSyncOptions} */
@@ -234,7 +251,8 @@ function ruleFunction(resolveRules) {
 			renderers.push(
 				// @ts-ignore
 				undefinedFunctionRenderer(sass, {
-					disallowedKnownCssFunctions
+					disallowedKnownCssFunctions,
+					additionalKnownCssFunctions
 				})
 			);
 		}

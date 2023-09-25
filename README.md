@@ -115,6 +115,13 @@ Default: `[]`
 
 [List of disallowed known CSS functions](https://github.com/niksy/sass-render-errors#options).
 
+### additionalKnownCssFunctions
+
+Type: `string[]`  
+Default: `[]`
+
+[List of additional known CSS functions](https://github.com/niksy/sass-render-errors#options).
+
 ## License
 
 MIT © [Ivan Nikolić](http://ivannikolic.com)
