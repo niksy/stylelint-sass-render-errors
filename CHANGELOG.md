@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [3.2.1][] - 2024-02-26
+
 ### Changed
 
 -   Allow Stylelint 16 as peer dependancy
@@ -86,5 +88,9 @@
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
 [3.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.1.0
 [Unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.0...HEAD
+	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.1...HEAD
+[3.2.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.2.1
+
+    https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.0...HEAD
+
 [3.2.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.2.0
