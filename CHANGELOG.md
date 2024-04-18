@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [4.0.0][] - 2024-04-18
+
 ### Changed
 
 -   Use [new Sass API](https://sass-lang.com/documentation/js-api/)
@@ -98,7 +100,8 @@
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
 [3.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.1.0
-[Unreleased]: https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.1...HEAD
+[Unreleased]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.1...v4.0.0
 [3.2.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.2.1
 
     https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.0...HEAD
