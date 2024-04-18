@@ -8,16 +8,14 @@ Implementation details:
 
 -   Sass deprecations are treated same as errors since
     [Sass tries to move language forward](https://github.com/sass/libsass/issues/2822#issuecomment-482914373)
-    and each deprecation should be corrected as soon as possible in your
-    codebase
--   Plugin operates on each file in isolation so if you have global `@import`
-    statements, they won’t be applied and you could get errors for e.g.
-    undefined variables. Recommendation is to switch to
+    and each deprecation should be corrected as soon as possible in your codebase
+-   Plugin operates on each file in isolation so if you have global `@import` statements, they won’t
+    be applied and you could get errors for e.g. undefined variables. Recommendation is to switch to
     [Sass modules](https://sass-lang.com/documentation/modules) and
     [`@use`/`@forward` statements](https://sass-lang.com/documentation/at-rules/use)
--   Sass (_only Dart Sass is supported_) should be installed as peer dependancy
-    because each version has different set of errors and deprecations and you
-    should get results for Sass version your application uses
+-   Sass (_only Dart Sass is supported_) should be installed as peer dependancy because each version
+    has different set of errors and deprecations and you should get results for Sass version your
+    application uses
 
 ## Install
 
@@ -67,8 +65,8 @@ If boolean, it will use default configuration:
 
 -   `sass.render` for rendering Sass files and resolving errors and deprecations
 -   Undefined functions are not checked
--   No options for Sass renderer other than `file` if file is linted or `data`
-    if CSS string is linted
+-   No options for Sass renderer other than `file` if file is linted or `data` if CSS string is
+    linted
 
 If object configuration, following properties are valid:
 
@@ -77,29 +75,25 @@ If object configuration, following properties are valid:
 Type: `boolean`  
 Default: `false`
 
-Rendering mode for Sass render. Can be either `false` for `sass.render` or
-`true` for `sass.renderSync`. This way you can
-[leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
+Rendering mode for Sass render. Can be either `false` for `sass.compileAsync` and
+`sass.compileStringAsync` or `true` for `sass.compile` and `sass.compileString`.
 
 ### sassOptions
 
-Type: `string|SassOptions`
+Type: `string|sass.Options|sass.StringOptions`
 
-If object, it is
-[Sass options](https://github.com/sass/dart-sass#javascript-api) object. For
-detailed explanation see
-[node-sass options reference](https://github.com/sass/node-sass#options).
+If object, it is either
+[`sass.Options`](https://sass-lang.com/documentation/js-api/interfaces/options/) or
+[`sass.StringOptions`](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/).
 
-If string, it is config file location which returns one of the following default
-exports:
+If string, it is config file location which returns one of the following default exports:
 
 -   Sass options object
 -   Async or regular function returning Sass options object
 
-Config file location is [resolved](https://github.com/sindresorhus/resolve-from)
-relatively from the
-[closest `package.json` location](https://github.com/sindresorhus/pkg-up) inside
-current working directory.
+Config file location is [resolved](https://github.com/sindresorhus/resolve-from) relatively from the
+[closest `package.json` location](https://github.com/sindresorhus/pkg-up) inside current working
+directory.
 
 ### checkUndefinedFunctions
 

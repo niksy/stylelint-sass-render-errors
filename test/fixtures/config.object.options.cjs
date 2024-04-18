@@ -1,3 +1,3 @@
 module.exports = {
-	includePaths: ['test/fixtures/loki']
+	loadPaths: ['test/fixtures/loki']
 };

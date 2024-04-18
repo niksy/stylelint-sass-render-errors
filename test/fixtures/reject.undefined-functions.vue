@@ -4,6 +4,6 @@
 .becky {
 	width: calc(100px + 1px);
 	color: becky(#f00);
-	min-height: rem(10);
+	transform: rotate(180deg);
 }
 </style>

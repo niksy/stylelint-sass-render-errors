@@ -2,6 +2,17 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Use [new Sass API](https://sass-lang.com/documentation/js-api/)
+-   Use new logger JS API for simpler deprecation parsing
+
+### Removed
+
+-   CommonJS support, only ESM is supported
+-   Node 10 support, lowest version is 18.12
+-   Legacy Sass support, lowest version is 1.75
+
 ## [3.2.1][] - 2024-02-26
 
 ### Changed
@@ -87,8 +98,7 @@
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
 [3.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.1.0
-[Unreleased]:
-	https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.1...HEAD
+[Unreleased]: https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.1...HEAD
 [3.2.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.2.1
 
     https://github.com/niksy/stylelint-sass-render-errors/compare/v3.2.0...HEAD

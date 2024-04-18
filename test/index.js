@@ -1,8 +1,5 @@
-import function_ from '../index.js';
+import { ruleName, messages } from '../index.js';
 import { runCodeTest, runFileTest } from './util/index.js';
-
-// @ts-ignore
-const { ruleName, messages } = function_;
 
 describe('Config as object', function () {
 	[{ sync: false }, { sync: true }].forEach((options) => {
@@ -29,9 +26,7 @@ describe('Config as object', function () {
 							column: 9,
 							endLine: 1,
 							endColumn: 15,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -67,7 +62,7 @@ describe('Config as object', function () {
 			config: {
 				...options,
 				sassOptions: {
-					includePaths: ['test/fixtures/loki']
+					loadPaths: ['test/fixtures/loki']
 				}
 			},
 			accept: [
@@ -103,9 +98,7 @@ describe('Config as object', function () {
 							column: 1,
 							endLine: 1,
 							endColumn: 12,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -132,7 +125,7 @@ describe('Config as object', function () {
 			config: {
 				...options,
 				sassOptions: {
-					includePaths: ['test/fixtures/loki']
+					loadPaths: ['test/fixtures/loki']
 				}
 			},
 			accept: [
@@ -172,9 +165,7 @@ describe('Config as file returning (async) function', function () {
 							column: 9,
 							endLine: 1,
 							endColumn: 15,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -187,9 +178,7 @@ describe('Config as file returning (async) function', function () {
 							column: 9,
 							endLine: 4,
 							endColumn: 15,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -283,9 +272,7 @@ describe('Config as file returning (async) function', function () {
 							column: 1,
 							endLine: 1,
 							endColumn: 12,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -350,9 +337,7 @@ describe('Config as file returning object', function () {
 							column: 9,
 							endLine: 1,
 							endColumn: 15,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -365,9 +350,7 @@ describe('Config as file returning object', function () {
 							column: 9,
 							endLine: 4,
 							endColumn: 15,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -461,9 +444,7 @@ describe('Config as file returning object', function () {
 							column: 1,
 							endLine: 1,
 							endColumn: 12,
-							text: messages.report(
-								"Can't find stylesheet to import."
-							)
+							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
 				},
@@ -588,12 +569,12 @@ describe('Check undefined functions, disallowed known and additional unknown CSS
 		{
 			sync: false,
 			checkUndefinedFunctions: true,
-			disallowedKnownCssFunctions: ['rem']
+			disallowedKnownCssFunctions: ['rotate']
 		},
 		{
 			sync: true,
 			checkUndefinedFunctions: true,
-			disallowedKnownCssFunctions: ['rem']
+			disallowedKnownCssFunctions: ['rotate']
 		}
 	].forEach((options) => {
 		runFileTest({
@@ -616,9 +597,9 @@ describe('Check undefined functions, disallowed known and additional unknown CSS
 					result: [
 						{
 							line: 2,
-							column: 14,
+							column: 13,
 							endLine: 2,
-							endColumn: 17,
+							endColumn: 19,
 							text: messages.report('Undefined function.')
 						},
 						{
@@ -636,9 +617,9 @@ describe('Check undefined functions, disallowed known and additional unknown CSS
 					result: [
 						{
 							line: 5,
-							column: 14,
+							column: 13,
 							endLine: 5,
-							endColumn: 17,
+							endColumn: 19,
 							text: messages.report('Undefined function.')
 						},
 						{
@@ -668,21 +649,21 @@ describe('Check undefined functions, disallowed known and additional unknown CSS
 			],
 			reject: [
 				{
-					input: 'body { min-height: rem(10); height: v-bind(height); }',
+					input: 'body { transform: rotate(180deg); height: v-bind(height); }',
 					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
-							column: 20,
+							column: 19,
 							endLine: 1,
-							endColumn: 23,
+							endColumn: 25,
 							text: messages.report('Undefined function.')
 						},
 						{
 							line: 1,
-							column: 37,
+							column: 43,
 							endLine: 1,
-							endColumn: 43,
+							endColumn: 49,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -697,13 +678,13 @@ describe('Check undefined functions, disallowed known and allowed additional kno
 		{
 			sync: false,
 			checkUndefinedFunctions: true,
-			disallowedKnownCssFunctions: ['rem'],
+			disallowedKnownCssFunctions: ['rotate'],
 			additionalKnownCssFunctions: ['v-bind']
 		},
 		{
 			sync: true,
 			checkUndefinedFunctions: true,
-			disallowedKnownCssFunctions: ['rem'],
+			disallowedKnownCssFunctions: ['rotate'],
 			additionalKnownCssFunctions: ['v-bind']
 		}
 	].forEach((options) => {
@@ -727,9 +708,9 @@ describe('Check undefined functions, disallowed known and allowed additional kno
 					result: [
 						{
 							line: 2,
-							column: 14,
+							column: 13,
 							endLine: 2,
-							endColumn: 17,
+							endColumn: 19,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -740,9 +721,9 @@ describe('Check undefined functions, disallowed known and allowed additional kno
 					result: [
 						{
 							line: 5,
-							column: 14,
+							column: 13,
 							endLine: 5,
-							endColumn: 17,
+							endColumn: 19,
 							text: messages.report('Undefined function.')
 						}
 					]
@@ -765,14 +746,14 @@ describe('Check undefined functions, disallowed known and allowed additional kno
 			],
 			reject: [
 				{
-					input: 'body { min-height: rem(10); height: v-bind(height); }',
+					input: 'body { transform: rotate(180deg); height: v-bind(height); }',
 					customSyntax: 'postcss-scss',
 					result: [
 						{
 							line: 1,
-							column: 20,
+							column: 19,
 							endLine: 1,
-							endColumn: 23,
+							endColumn: 25,
 							text: messages.report('Undefined function.')
 						}
 					]

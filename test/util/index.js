@@ -1,14 +1,9 @@
 /* eslint-disable mocha/no-exports */
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-import assert from 'assert';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
 import stylelint from 'stylelint';
 import plugin from '../../index.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const { lint } = stylelint;
 
 /**
  * @typedef {import('stylelint').CustomSyntax} CustomSyntax
@@ -36,11 +31,9 @@ const { lint } = stylelint;
 export const runCodeTest = (options) => {
 	const { ruleName, config, customSyntax, accept, reject } = options ?? {};
 
-	accept.forEach((/** @type {Test} */ { input, customSyntax: syntax }) => {
+	accept.forEach(({ input, customSyntax: syntax }) => {
 		it(`should pass for: \`${input}\``, async function () {
-			const {
-				results: [{ warnings }]
-			} = await lint({
+			const { results } = await stylelint.lint({
 				code: input,
 				customSyntax: customSyntax ?? syntax,
 				config: {
@@ -50,6 +43,7 @@ export const runCodeTest = (options) => {
 					}
 				}
 			});
+			const warnings = results[0]?.warnings ?? [];
 			assert.equal(
 				warnings.length,
 				0,
@@ -58,50 +52,10 @@ export const runCodeTest = (options) => {
 		});
 	});
 
-	reject.forEach(
-		(/** @type {Test} */ { input, customSyntax: syntax, result }) => {
-			it(`should reject for: \`${input}\``, async function () {
-				const {
-					results: [{ warnings }]
-				} = await lint({
-					code: input,
-					customSyntax: customSyntax ?? syntax,
-					config: {
-						plugins: [plugin],
-						rules: {
-							[ruleName]: config
-						}
-					}
-				});
-				assert.equal(
-					warnings.length,
-					result.length,
-					`Not all warnings have been covered for reject case`
-				);
-				warnings.forEach(({ rule, severity, ...warning }, index) => {
-					assert.deepEqual(
-						warning,
-						result[index],
-						`Warning is not covered: "${warning.text}"`
-					);
-				});
-			});
-		}
-	);
-};
-
-/**
- * @param {TestOptions} options
- */
-export const runFileTest = (options) => {
-	const { ruleName, config, customSyntax, accept, reject } = options ?? {};
-
-	accept.forEach((/** @type {Test} */ { input, customSyntax: syntax }) => {
-		it(`should pass for: \`${input}\``, async function () {
-			const {
-				results: [{ warnings }]
-			} = await lint({
-				files: path.resolve(__dirname, '../', input),
+	reject.forEach(({ input, customSyntax: syntax, result }) => {
+		it(`should reject for: \`${input}\``, async function () {
+			const { results } = await stylelint.lint({
+				code: input,
 				customSyntax: customSyntax ?? syntax,
 				config: {
 					plugins: [plugin],
@@ -110,6 +64,42 @@ export const runFileTest = (options) => {
 					}
 				}
 			});
+			const warnings = results[0]?.warnings ?? [];
+			assert.equal(
+				warnings.length,
+				result.length,
+				`Not all warnings have been covered for reject case`
+			);
+			warnings.forEach(({ rule, severity, ...warning }, index) => {
+				assert.deepEqual(
+					warning,
+					result[index],
+					`Warning is not covered: "${warning.text}"`
+				);
+			});
+		});
+	});
+};
+
+/**
+ * @param {TestOptions} options
+ */
+export const runFileTest = (options) => {
+	const { ruleName, config, customSyntax, accept, reject } = options ?? {};
+
+	accept.forEach(({ input, customSyntax: syntax }) => {
+		it(`should pass for: \`${input}\``, async function () {
+			const { results } = await stylelint.lint({
+				files: fileURLToPath(new URL(`../${input}`, import.meta.url)),
+				customSyntax: customSyntax ?? syntax,
+				config: {
+					plugins: [plugin],
+					rules: {
+						[ruleName]: config
+					}
+				}
+			});
+			const warnings = results[0]?.warnings ?? [];
 			assert.equal(
 				warnings.length,
 				0,
@@ -118,34 +108,31 @@ export const runFileTest = (options) => {
 		});
 	});
 
-	reject.forEach(
-		(/** @type {Test} */ { input, customSyntax: syntax, result }) => {
-			it(`should reject for: \`${input}\``, async function () {
-				const {
-					results: [{ warnings }]
-				} = await lint({
-					files: path.resolve(__dirname, '../', input),
-					customSyntax: customSyntax ?? syntax,
-					config: {
-						plugins: [plugin],
-						rules: {
-							[ruleName]: config
-						}
+	reject.forEach(({ input, customSyntax: syntax, result }) => {
+		it(`should reject for: \`${input}\``, async function () {
+			const { results } = await stylelint.lint({
+				files: fileURLToPath(new URL(`../${input}`, import.meta.url)),
+				customSyntax: customSyntax ?? syntax,
+				config: {
+					plugins: [plugin],
+					rules: {
+						[ruleName]: config
 					}
-				});
-				assert.equal(
-					warnings.length,
-					result.length,
-					`Not all warnings have been covered for reject case`
-				);
-				warnings.forEach(({ rule, severity, ...warning }, index) => {
-					assert.deepEqual(
-						warning,
-						result[index],
-						`Warning is not covered: "${warning.text}"`
-					);
-				});
+				}
 			});
-		}
-	);
+			const warnings = results[0]?.warnings ?? [];
+			assert.equal(
+				warnings.length,
+				result.length,
+				`Not all warnings have been covered for reject case`
+			);
+			warnings.forEach(({ rule, severity, ...warning }, index) => {
+				assert.deepEqual(
+					warning,
+					result[index],
+					`Warning is not covered: "${warning.text}"`
+				);
+			});
+		});
+	});
 };

@@ -2,7 +2,7 @@
 <script></script>
 <style lang="scss">
 .becky {
-	min-height: rem(10);
+	transform: rotate(180deg);
 	height: v-bind(height);
 }
 </style>
