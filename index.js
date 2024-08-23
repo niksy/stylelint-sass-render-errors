@@ -18,6 +18,7 @@
  */
 
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import AjvModule from 'ajv';
 import stylelint from 'stylelint';
 import renderErrorsFactory, {
@@ -114,7 +115,12 @@ async function getCompilerOptions(input, configValue) {
 	if (typeof configValue === 'string') {
 		const configLocation = await getConfigLocation(process.cwd(), configValue);
 		const importedConfig = await importConfig(configLocation);
-		config = importedConfig;
+		config = {
+			...(file && {
+				url: pathToFileURL(file)
+			}),
+			...importedConfig
+		};
 	} else {
 		config = configValue;
 	}
