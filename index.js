@@ -23,7 +23,7 @@ import stylelint from 'stylelint';
 import renderErrorsFactory, {
 	undefinedFunctions as undefinedFunctionsFactory
 } from 'sass-render-errors';
-import sass from 'sass';
+import * as sass from 'sass';
 import { packageUp } from 'package-up';
 import resolveFrom from 'resolve-from';
 import pMemoize from 'p-memoize';

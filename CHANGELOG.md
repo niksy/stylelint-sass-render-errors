@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+-   Update Sass import identifier
+
 ## [4.0.1][] - 2024-04-21
 
 -   Update types referencing
