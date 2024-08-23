@@ -2,6 +2,9 @@
 
 ## [Unreleased][]
 
+-   Pass file information to Sass configuration
+-   Update tests
+
 ## [4.0.2][] - 2024-08-23
 
 -   Update Sass import identifier
