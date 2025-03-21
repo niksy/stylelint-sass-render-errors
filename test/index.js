@@ -508,9 +508,9 @@ describe('Check undefined functions', function () {
 					customSyntax: 'postcss-scss',
 					result: [
 						{
-							line: 3,
+							line: 5,
 							column: 9,
-							endLine: 3,
+							endLine: 5,
 							endColumn: 14,
 							text: messages.report('Undefined function.')
 						}
@@ -521,9 +521,9 @@ describe('Check undefined functions', function () {
 					customSyntax: 'postcss-html',
 					result: [
 						{
-							line: 6,
+							line: 8,
 							column: 9,
-							endLine: 6,
+							endLine: 8,
 							endColumn: 14,
 							text: messages.report('Undefined function.')
 						}

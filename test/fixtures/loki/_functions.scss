@@ -1,0 +1,9 @@
+@function dexter($value) {
+	@return $value;
+}
+
+@mixin brutus {
+	body {
+		color: red;
+	}
+}

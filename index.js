@@ -115,20 +115,10 @@ async function getCompilerOptions(input, configValue) {
 	if (typeof configValue === 'string') {
 		const configLocation = await getConfigLocation(process.cwd(), configValue);
 		const importedConfig = await importConfig(configLocation);
-		config = {
-			...(file && {
-				url: pathToFileURL(file)
-			}),
-			...importedConfig
-		};
+		config = importedConfig;
 	} else {
 		config = configValue;
 	}
-
-	const options = {
-		...config,
-		quietDeps: true
-	};
 
 	let type;
 	let value = file ?? css ?? '';
@@ -145,6 +135,20 @@ async function getCompilerOptions(input, configValue) {
 		type = 'code';
 		value = css;
 	}
+
+	let entryUrl = null;
+	if (type === 'code' && file && file !== 'stdin') {
+		entryUrl = pathToFileURL(file);
+	}
+
+	const options = {
+		...config,
+		...(entryUrl && {
+			url: entryUrl
+		}),
+		quietDeps: true
+	};
+
 	return {
 		type: type,
 		value: value,
