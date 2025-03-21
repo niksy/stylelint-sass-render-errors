@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [4.1.2][] - 2025-03-21
+
 ### Changed
 
 - Force latest sass-render-errors version
@@ -123,7 +125,8 @@
 [3.0.1]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.1
 [3.0.2]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.0.2
 [3.1.0]: https://github.com/niksy/stylelint-sass-render-errors/tree/v3.1.0
-[Unreleased]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.1.1...HEAD
+[Unreleased]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.1.2...HEAD
+[4.1.2]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.1.1...v4.1.2
 [4.1.1]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.0.2...v4.1.0
 [4.0.2]: https://github.com/niksy/stylelint-sass-render-errors/compare/v4.0.1...v4.0.2
