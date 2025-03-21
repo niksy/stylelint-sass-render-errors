@@ -70,7 +70,7 @@ export const runCodeTest = (options) => {
 				result.length,
 				`Not all warnings have been covered for reject case`
 			);
-			warnings.forEach(({ rule, severity, url, ...warning }, index) => {
+			warnings.forEach(({ rule, severity, url, fix, ...warning }, index) => {
 				assert.deepEqual(
 					warning,
 					result[index],
@@ -126,7 +126,7 @@ export const runFileTest = (options) => {
 				result.length,
 				`Not all warnings have been covered for reject case`
 			);
-			warnings.forEach(({ rule, severity, url, ...warning }, index) => {
+			warnings.forEach(({ rule, severity, url, fix, ...warning }, index) => {
 				assert.deepEqual(
 					warning,
 					result[index],

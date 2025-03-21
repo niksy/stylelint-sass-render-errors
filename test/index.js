@@ -23,9 +23,9 @@ describe('Config as object', function () {
 					result: [
 						{
 							line: 1,
-							column: 9,
+							column: 1,
 							endLine: 1,
-							endColumn: 15,
+							endColumn: 12,
 							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
@@ -162,9 +162,9 @@ describe('Config as file returning (async) function', function () {
 					result: [
 						{
 							line: 1,
-							column: 9,
+							column: 1,
 							endLine: 1,
-							endColumn: 15,
+							endColumn: 12,
 							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
@@ -175,9 +175,9 @@ describe('Config as file returning (async) function', function () {
 					result: [
 						{
 							line: 4,
-							column: 9,
+							column: 1,
 							endLine: 4,
-							endColumn: 15,
+							endColumn: 12,
 							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
@@ -334,9 +334,9 @@ describe('Config as file returning object', function () {
 					result: [
 						{
 							line: 1,
-							column: 9,
+							column: 1,
 							endLine: 1,
-							endColumn: 15,
+							endColumn: 12,
 							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
@@ -347,9 +347,9 @@ describe('Config as file returning object', function () {
 					result: [
 						{
 							line: 4,
-							column: 9,
+							column: 1,
 							endLine: 4,
-							endColumn: 15,
+							endColumn: 12,
 							text: messages.report("Can't find stylesheet to import.")
 						}
 					]
