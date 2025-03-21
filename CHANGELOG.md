@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+- Force latest sass-render-errors version
+
 ## [4.1.1][] - 2025-03-21
 
 ### Fixed
