@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+- Remove unecessary `line` argument for report
+
 ## [4.1.2][] - 2025-03-21
 
 ### Changed

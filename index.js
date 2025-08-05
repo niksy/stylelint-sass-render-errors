@@ -250,7 +250,6 @@ function ruleFunction(/** @type {PluginConfig}*/ resolveRules) {
 				ruleName: ruleName,
 				result: result,
 				node: cssRoot,
-				line: 1,
 				message: messages.report(error.message)
 			});
 			return;
@@ -319,14 +318,12 @@ function ruleFunction(/** @type {PluginConfig}*/ resolveRules) {
 					offset + error.source.start.line,
 					error.source.start.column
 				);
-				const closestLine = closestNode?.source?.start?.line ?? error.source.start.line;
 
 				stylelint.utils.report({
 					ruleName: ruleName,
 					result: result,
 					node: closestNode,
 					word: error.source.pattern,
-					line: closestLine,
 					message: messages.report(error.message)
 				});
 			});
