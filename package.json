@@ -69,12 +69,12 @@
     "postcss-scss": "^4.0.1",
     "prettier": "^3.2.5",
     "sass": "^1.75.0",
-    "stylelint": "^16.2.1",
-    "typescript": "^5.4.3",
+    "stylelint": "^17.15.0",
+    "typescript": "^5.9.3",
     "version-changelog": "^3.1.1"
   },
   "peerDependencies": {
-    "stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0"
+    "stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "engines": {
     "node": ">=18.12"
